@@ -96,14 +96,24 @@ function bind(params) {
   });
 }
 
+/**
+ * node:sqlite returns rows with a null prototype. React Server Components
+ * refuse to serialise those to client components, so we rehydrate each row as a
+ * plain object literal. The cost is negligible at this scale and it removes a
+ * whole class of "only plain objects can be passed" surprises downstream.
+ */
+function plain(row) {
+  return row ? { ...row } : row;
+}
+
 /** @returns {any[]} */
 export function all(sql, ...params) {
-  return getDb().prepare(sql).all(...bind(params));
+  return getDb().prepare(sql).all(...bind(params)).map(plain);
 }
 
 /** @returns {any | undefined} */
 export function get(sql, ...params) {
-  return getDb().prepare(sql).get(...bind(params));
+  return plain(getDb().prepare(sql).get(...bind(params)));
 }
 
 export function run(sql, ...params) {

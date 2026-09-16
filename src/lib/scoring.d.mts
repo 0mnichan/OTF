@@ -1,0 +1,15 @@
+export const RANKS: { min: number; name: string; icon: string }[];
+export function rankFor(points: number): { min: number; name: string; icon: string; next: any; progress: number; points: number };
+export const RATE_LIMIT: { attempts: number; windowSeconds: number };
+export function checkAnswer(question: any, value: string, userId: number): boolean;
+export function submitAnswer(userId: number, questionId: number, value: string): any;
+export function recomputeUserPoints(userId: number): number;
+export function refreshRoomCompletion(userId: number, roomId: number): boolean;
+export function unlockHint(userId: number, hintId: number): { status: string; body?: string; cost?: number };
+export function unlockedHintIds(userId: number, roomId: number): Set<number>;
+export function awardBadges(userId: number): { slug: string; title: string; icon: string }[];
+export function userBadges(userId: number): any[];
+export function leaderboard(opts?: { limit?: number; since?: string | null }): any[];
+export function progressByRoom(userId: number): Map<number, any>;
+export function lockedRoomIds(userId: number): Set<number>;
+export function recentActivity(limit?: number): any[];

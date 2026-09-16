@@ -1,0 +1,11 @@
+export const PROJECT_ROOT: string;
+export function dbPath(): string;
+export function getDb(): any;
+export function migrate(db: any): string[];
+export function all(sql: string, ...params: unknown[]): any[];
+export function get(sql: string, ...params: unknown[]): any;
+export function run(sql: string, ...params: unknown[]): { changes: number; lastInsertRowid: number | bigint };
+export function transaction<T>(fn: () => T): T;
+export function json(value: unknown, fallback?: unknown): any;
+export function closeDb(): void;
+export function useDatabase(path: string): any;
