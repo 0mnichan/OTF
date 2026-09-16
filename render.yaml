@@ -1,0 +1,45 @@
+# Render Blueprint — deploys the OTF platform in content-only mode.
+#
+# Labs are intentionally OFF here: without OTF_ORCHESTRATOR_URL the app runs
+# fine and the lab panel shows "orchestrator not configured". Live labs need a
+# Docker host (your homelab) and get wired in later.
+#
+# To deploy: Render dashboard -> New + -> Blueprint -> connect this repo.
+# Render reads this file and provisions the service.
+
+services:
+  - type: web
+    name: otf
+    runtime: node
+    plan: free                 # bump to 'starter' for always-on + a persistent disk
+    region: oregon             # pick the region nearest you
+    branch: claude/ot-ics-ctf-platform-fjo8gk
+    buildCommand: npm ci && npm run build
+    startCommand: npm run db:migrate && npm run content:sync && npm run seed && npm run start -- -p $PORT -H 0.0.0.0
+    healthCheckPath: /
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: 22.22.2
+      - key: NODE_ENV
+        value: production
+      - key: OTF_SECRET          # signs sessions + derives per-user flags
+        generateValue: true
+      - key: OTF_ORCHESTRATOR_TOKEN
+        generateValue: true
+      - key: OTF_OPEN_REGISTRATION
+        value: "1"               # first account created becomes admin
+      - key: OTF_DB_PATH
+        value: ./data/otf.db     # writable, but EPHEMERAL on free (resets each deploy)
+
+    # --- Persistence (optional) ---------------------------------------------
+    # Free instances have an ephemeral filesystem, so users/progress reset on
+    # every deploy or cold start (content + badges re-seed automatically on
+    # boot, so the site is never broken — just forgetful). To keep data:
+    #   1. set plan: starter  (above)
+    #   2. uncomment the disk block below
+    #   3. change OTF_DB_PATH to /var/data/otf.db
+    # disk:
+    #   name: otf-data
+    #   mountPath: /var/data
+    #   sizeGB: 1

@@ -59,3 +59,27 @@ OTF_ORCHESTRATOR_URL=http://localhost:4000 OTF_ORCHESTRATOR_TOKEN=dev npm run de
 
 See `docs/SECURITY.md`. The essentials: real secrets, remove seed accounts, TLS
 at Traefik, and front the Docker socket with `docker-socket-proxy`.
+
+## Deploy the platform to Render (content-only, no labs)
+
+The quickest way to get OTF in front of people. Labs stay off (they need a
+Docker host — your homelab — added later); everything else works.
+
+1. Push this repo to GitHub (already done for the working branch).
+2. In Render: **New + → Blueprint**, connect the repo. Render reads
+   `render.yaml` and provisions a Node web service.
+3. Wait for the first deploy. The start command migrates, syncs content and
+   seeds badges on every boot, so the site comes up populated.
+4. Open the URL and **register — the first account becomes admin.**
+
+**Data persistence:** the free plan has an ephemeral filesystem, so accounts and
+progress reset on each deploy/cold start (content and badges re-seed
+automatically, so it's never broken — just forgetful). To keep data, follow the
+persistence notes in `render.yaml`: switch to a paid instance, add the disk
+block, and point `OTF_DB_PATH` at the mounted volume. Or run the platform on the
+homelab where the SQLite file lives on real disk.
+
+**Adding labs later:** once the homelab orchestrator is reachable, set
+`OTF_ORCHESTRATOR_URL` and `OTF_ORCHESTRATOR_TOKEN` on the service and the lab
+panels light up. (Realistically you'll move the whole thing to the homelab for
+labs, since the orchestrator and the web app want to share a network.)
