@@ -13,7 +13,7 @@ services:
     runtime: node
     plan: free                 # bump to 'starter' for always-on + a persistent disk
     region: oregon             # pick the region nearest you
-    branch: claude/ot-ics-ctf-platform-fjo8gk
+    branch: main
     buildCommand: npm ci && npm run build
     startCommand: npm run db:migrate && npm run content:sync && npm run seed && npm run start -- -p $PORT -H 0.0.0.0
     healthCheckPath: /
