@@ -1,0 +1,77 @@
+# OTF — single-VM deployment.
+#
+#   cp .env.example .env      # set OTF_SECRET (openssl rand -hex 32)
+#   ./infra/build-labs.sh     # build the lab images (once)
+#   docker compose -f infra/docker-compose.yml up -d
+#
+# Traefik terminates TLS and routes both the app and the per-player lab
+# containers the orchestrator spawns (discovered by container label).
+
+name: otf
+
+services:
+  traefik:
+    image: traefik:v3.1
+    restart: unless-stopped
+    command:
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --providers.docker.network=otf_edge
+      - --entrypoints.web.address=:80
+      # For TLS, uncomment and set an email + domain:
+      # - --entrypoints.websecure.address=:443
+      # - --certificatesresolvers.le.acme.email=you@example.com
+      # - --certificatesresolvers.le.acme.storage=/acme/acme.json
+      # - --certificatesresolvers.le.acme.httpchallenge.entrypoint=web
+    ports:
+      - "80:80"
+      # - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - acme:/acme
+    networks: [edge]
+
+  web:
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile.web
+    restart: unless-stopped
+    env_file: ../.env
+    environment:
+      OTF_DB_PATH: /data/otf.db
+      OTF_ORCHESTRATOR_URL: http://orchestrator:4000
+      NODE_ENV: production
+    volumes:
+      - data:/data
+    depends_on: [orchestrator]
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.otf.rule=PathPrefix(`/`)
+      - traefik.http.routers.otf.entrypoints=web
+      - traefik.http.services.otf.loadbalancer.server.port=3000
+    networks: [edge, backend]
+
+  orchestrator:
+    build:
+      context: ../services/orchestrator
+    restart: unless-stopped
+    environment:
+      OTF_ORCHESTRATOR_TOKEN: ${OTF_ORCHESTRATOR_TOKEN:-change-me-too}
+      OTF_LAB_HOST: ${OTF_LAB_HOST:-localhost}
+      OTF_MAX_LABS: ${OTF_MAX_LABS:-40}
+    volumes:
+      # The orchestrator needs the Docker socket to spawn labs. In production,
+      # front this with docker-socket-proxy (see docs/SECURITY.md) rather than
+      # mounting the raw socket.
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks: [backend]
+
+volumes:
+  data:
+  acme:
+
+networks:
+  edge:
+    name: otf_edge
+  backend:
+    name: otf_backend

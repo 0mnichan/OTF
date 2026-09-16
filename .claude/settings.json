@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npm install --no-audit --no-fund >/dev/null 2>&1 && OTF_SECRET=session-hook npm run setup >/dev/null 2>&1 || true"
+          }
+        ]
+      }
+    ]
+  }
+}

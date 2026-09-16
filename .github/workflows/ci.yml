@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches: [main, 'claude/**']
+  pull_request:
+
+jobs:
+  web:
+    name: Web app — typecheck, content, tests, build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Validate content
+        run: npm run content:validate
+      - name: Migrate + sync + seed (smoke)
+        run: npm run setup
+        env:
+          OTF_SECRET: ci-secret-not-used-in-prod
+      - name: Unit + integration tests
+        run: npm test
+      - name: Production build
+        run: npm run build
+        env:
+          OTF_SECRET: ci-secret-not-used-in-prod
+
+  orchestrator:
+    name: Orchestrator — tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - working-directory: services/orchestrator
+        run: npm install --no-audit --no-fund
+      - working-directory: services/orchestrator
+        run: node --test
+
+  labs:
+    name: Labs — physics tests, artifact generation, Dockerfile lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Physics + flag tests
+        run: python3 tests/test_physics.py
+      - name: Regenerate artifacts (must be reproducible)
+        run: |
+          python3 labs/generators/gen_modbus_101.py /tmp/a.pcap
+          python3 labs/generators/gen_substation.py /tmp/b.pcap
+          python3 labs/generators/gen_grader_captures.py /tmp/caps
+      - name: Grader self-check
+        run: |
+          mkdir -p ~/work
+          printf 'alert ip !10.20.0.5 any -> 10.20.0.10 2404 (typeid:45; sid:1;)\n' > ~/work/detect.rules
+          OTF_GRADE_CAPTURES=/tmp/caps OTF_FLAG='OTF{ci}' python3 labs/images/analyst-shell/grader/grade.py

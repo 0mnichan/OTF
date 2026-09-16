@@ -1,0 +1,26 @@
+# Production image for the OTF web app.
+FROM node:22-bookworm-slim AS build
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+FROM node:22-bookworm-slim AS run
+WORKDIR /app
+ENV NODE_ENV=production
+# node:sqlite is built in; no native module compilation needed.
+COPY --from=build /app/.next ./.next
+COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/package.json ./package.json
+COPY --from=build /app/public ./public
+COPY --from=build /app/db ./db
+COPY --from=build /app/content ./content
+COPY --from=build /app/src ./src
+COPY --from=build /app/scripts ./scripts
+COPY --from=build /app/next.config.mjs ./next.config.mjs
+RUN mkdir -p /data && \
+    printf '#!/bin/sh\nset -e\nnode --experimental-sqlite scripts/migrate.mjs\nnode --experimental-sqlite scripts/content.mjs sync\nnode --experimental-sqlite scripts/seed.mjs\nexec npm run start -- -p 3000 -H 0.0.0.0\n' > /app/start.sh && \
+    chmod +x /app/start.sh
+EXPOSE 3000
+CMD ["/app/start.sh"]

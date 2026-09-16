@@ -23,6 +23,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             authorised testing only — never point them at equipment you do not own and have written
             permission to test.
           </p>
+          <p className="mt-2">
+            <a href="/legal" className="hover:text-[var(--color-ink-dim)] hover:underline">Acceptable Use &amp; Safety</a>
+          </p>
         </footer>
       </body>
     </html>
