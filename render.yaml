@@ -14,7 +14,9 @@ services:
     plan: free                 # bump to 'starter' for always-on + a persistent disk
     region: oregon             # pick the region nearest you
     branch: main
-    buildCommand: npm ci && npm run build
+    # NODE_ENV=production makes npm omit devDependencies, but the build needs
+    # them (tailwind/postcss/typescript), so force them in with --include=dev.
+    buildCommand: npm ci --include=dev && npm run build
     startCommand: npm run db:migrate && npm run content:sync && npm run seed && npm run start -- -p $PORT -H 0.0.0.0
     healthCheckPath: /
     autoDeploy: true
