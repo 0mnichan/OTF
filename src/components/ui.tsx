@@ -26,12 +26,12 @@ export function Tag({ children }: { children: ReactNode }) {
 export function Stat({ icon, label, value }: { icon: IconName; label: string; value: ReactNode }) {
   const I = Icon[icon];
   return (
-    <div className="card flex items-center gap-3 px-4 py-3">
-      <div className="bevel-in grid h-10 w-10 place-items-center bg-[#12233d] text-[var(--color-alarm)]">
+    <div className="card flex items-center gap-3 p-2">
+      <div className="grid h-10 w-10 place-items-center bg-[var(--w95-face)] text-[#000080]" style={{ boxShadow: 'inset -1px -1px 0 #0a0a0a, inset 1px 1px 0 #fff, inset -2px -2px 0 #808080, inset 2px 2px 0 #dfdfdf' }}>
         <I size={20} />
       </div>
-      <div>
-        <div className="mono text-xl font-bold leading-none text-[var(--color-navy)]">{value}</div>
+      <div className="bevel-in flex-1 self-stretch bg-white px-3 py-1.5">
+        <div className="mono text-xl font-bold leading-none text-black">{value}</div>
         <div className="mono mt-1 text-[10px] uppercase tracking-wide text-[var(--color-ink-faint)]">{label}</div>
       </div>
     </div>

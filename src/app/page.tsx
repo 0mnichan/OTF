@@ -15,45 +15,51 @@ export default async function HomePage() {
 
   return (
     <div className="flex flex-col gap-12">
-      {/* Hero — a process-overview panel */}
-      <section className="card overflow-hidden">
-        <div className="hmi-titlebar mono flex items-center justify-between px-4 py-1.5 text-[11px] font-semibold">
-          <span>P&amp;ID-001 · PLANT OVERVIEW · SHEET 1/1</span>
-          <span className="hidden sm:inline">REV 04 · OTF/range</span>
+      {/* Hero — a Win9x "process overview" window */}
+      <section className="card">
+        <div className="title-bar flex items-center gap-2 px-1.5 py-1">
+          <Icon.gauge size={14} />
+          <span className="mono text-[12px]">PLANT-OVERVIEW.EXE — P&amp;ID-001 · SHEET 1/1</span>
+          <div className="ml-auto flex items-center gap-1">
+            <span className="title-btn">_</span>
+            <span className="title-btn">▢</span>
+            <span className="title-btn">✕</span>
+          </div>
         </div>
-        <div className="relative overflow-hidden px-6 py-12 sm:px-12 sm:py-16">
-          <div className="pointer-events-none absolute -right-10 -top-6 opacity-[0.07]">
-            <Icon.gauge size={280} />
+        <div className="relative overflow-hidden px-6 py-10 sm:px-10 sm:py-14">
+          <div className="pointer-events-none absolute -right-8 -top-4 opacity-[0.08]">
+            <Icon.gauge size={260} />
           </div>
           <div className="relative max-w-2xl">
-            <div className="mono mb-4 inline-flex items-center gap-2 bg-[var(--color-alarm)] px-2.5 py-1 text-[11px] font-bold tracking-wide text-[#241a05]">
-              <span className="live-dot led" style={{ color: '#b3231b' }} />
-              OT / ICS SECURITY RANGE
+            <div className="mono mb-4 inline-flex items-center gap-2 bg-[var(--color-alarm)] px-2 py-1 text-[11px] font-bold tracking-wide text-[#241a05]"
+              style={{ boxShadow: 'inset -1px -1px 0 #b9791a, inset 1px 1px 0 #ffe1a0' }}>
+              <span className="live-dot led" style={{ color: '#a80000' }} />
+              OT / ICS SECURITY RANGE — v1.0
             </div>
-            <h1 className="text-4xl font-bold leading-tight tracking-tight text-[var(--color-navy)] sm:text-5xl">
+            <h1 className="text-4xl font-bold leading-tight text-[#000080] sm:text-5xl">
               Break the plant.<br />
-              <span className="text-[var(--color-hazard)]">Not a real one.</span>
+              <span className="text-[#a05000]">Not a real one.</span>
             </h1>
-            <p className="mt-5 text-lg text-[var(--color-ink-dim)]">
+            <p className="mt-5 text-[15px] text-black">
               Hands-on capture-the-flag for industrial control systems. Overflow a water tank, open a
               substation breaker, pivot from a phished laptop down to a reactor PLC — against
               simulations that behave like the real thing, speaking Modbus, DNP3, IEC-104 and S7comm.
             </p>
-            <p className="mt-3 text-[var(--color-ink-faint)]">
+            <p className="mt-3 text-[13px] text-[var(--color-ink-faint)]">
               The flag is never just a string. It is a process state you have to actually cause.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-7 flex flex-wrap gap-2">
               <Link
                 href={user ? '/rooms' : '/register'}
-                className="bevel-out mono flex items-center gap-2 bg-[var(--color-alarm)] px-5 py-2.5 text-sm font-bold uppercase tracking-wide text-[#241a05] hover:brightness-105"
+                className="bevel-out flex items-center gap-2 bg-[var(--w95-face)] px-5 py-2 text-[13px] font-bold text-black"
               >
-                {user ? 'Enter the range' : 'Enlist — free'} <Icon.chevronRight size={18} />
+                <Icon.bolt size={15} /> {user ? 'Enter the range' : 'Enlist — it is free'}
               </Link>
               <Link
                 href="/paths/ics-fundamentals"
-                className="bevel-out mono flex items-center gap-2 bg-[var(--color-panel-raised)] px-5 py-2.5 text-sm font-bold uppercase tracking-wide text-[var(--color-navy)] hover:brightness-105"
+                className="bevel-out flex items-center gap-2 bg-[var(--w95-face)] px-5 py-2 text-[13px] text-black"
               >
-                <Icon.path size={18} /> Fundamentals path
+                <Icon.path size={15} /> Fundamentals path
               </Link>
             </div>
           </div>

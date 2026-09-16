@@ -22,7 +22,7 @@ export function HmiClock() {
     : '--/---/---- --:--:--';
 
   return (
-    <span className="mono bevel-in hidden bg-[#0b1c33] px-2 py-1 text-[11px] tracking-wider text-[#5fe08a] lg:inline-block" suppressHydrationWarning>
+    <span className="mono bevel-in hidden bg-white px-2 py-0.5 text-[11px] tracking-wide text-black lg:inline-block" suppressHydrationWarning>
       {stamp}
     </span>
   );

@@ -1,214 +1,241 @@
 @import "tailwindcss";
 
 /*
- * OTF visual language — "the HMI".
+ * OTF visual language — "the operator station", Windows 9x / vendor-HMI era.
  *
- * A deliberately retro supervisory-control aesthetic: a light industrial-grey
- * desktop dotted like a P&ID sheet, navy chrome bars, amber alarm strips,
- * chunky beveled panels, monospace data, red equipment tags and green ONLINE
- * indicators. It should feel like sitting down at an operator workstation, not
- * a modern SaaS dashboard.
+ * Authentic 4-tone pixel bevels (white / light-grey / dark-grey / black), a
+ * silver #c0c0c0 chassis, blue gradient title bars with ▬ □ ✕ buttons, white
+ * sunken fields, Tahoma/Fixedsys type, and a P&ID dotted sheet behind it all.
  */
 @theme {
-  /* Surfaces */
-  --color-desktop: #b3afa5;        /* the grey "desktop" behind everything */
-  --color-panel: #b3afa5;          /* alias kept for existing utilities */
-  --color-panel-raised: #d8d4ca;   /* panel / card face */
-  --color-panel-sunken: #c3bfb4;   /* inset wells (inputs, code) */
-  --color-panel-border: #8f8c81;   /* mid bevel line */
+  /* Win9x chassis palette */
+  --w95-face: #c0c0c0;
+  --w95-hilite: #ffffff;
+  --w95-light: #dfdfdf;
+  --w95-shadow: #808080;
+  --w95-dark: #0a0a0a;
 
-  /* Chrome */
-  --color-navy: #0f3168;
-  --color-navy-light: #1c4c93;
-  --color-navy-deep: #0a2350;
+  /* Surfaces (existing utilities remap onto the chassis) */
+  --color-desktop: #b0aca2;
+  --color-panel: #c0c0c0;
+  --color-panel-raised: #c0c0c0;
+  --color-panel-sunken: #ffffff;
+  --color-panel-border: #808080;
+  --color-field: #ffffff;
 
-  /* Ink (dark, for a light background) */
-  --color-ink: #14202f;
-  --color-ink-dim: #3c4453;
-  --color-ink-faint: #6a6d76;
+  /* Title-bar blue (the iconic active-window gradient) */
+  --color-navy: #000080;
+  --color-navy-light: #1084d0;
+  --color-navy-deep: #000060;
 
-  /* Signal colours (HMI conventions) */
-  --color-hazard: #b5651d;         /* burnt amber — accents + primary action */
-  --color-hazard-dim: #8a4c14;
-  --color-alarm: #f5a623;          /* bright amber — alarm strip fill */
-  --color-process: #157a37;        /* running / normal / OK */
-  --color-trip: #b3231b;           /* trip / fault / equipment tag */
-  --color-info: #0f3168;           /* links */
-  --color-conduit: #1c4c93;
+  /* Ink */
+  --color-ink: #000000;
+  --color-ink-dim: #2a2a2a;
+  --color-ink-faint: #565656;
 
-  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", "Consolas", monospace;
+  /* Signal colours */
+  --color-hazard: #a05000;
+  --color-hazard-dim: #7a3d00;
+  --color-alarm: #ffb000;
+  --color-process: #008000;
+  --color-trip: #a80000;
+  --color-info: #000080;
+  --color-conduit: #000080;
 
-  /* 3D bevel primitives */
-  --bevel-hi: #f6f3ec;
-  --bevel-lo: #7f7c71;
-  --bevel-face: #d8d4ca;
+  --font-mono: "Fixedsys", "Consolas", ui-monospace, "Courier New", monospace;
+  --font-ui: "Tahoma", "MS Sans Serif", Geneva, Verdana, sans-serif;
 }
 
-:root {
-  color-scheme: light;
-}
+:root { color-scheme: light; }
 
-html {
-  background: var(--color-desktop);
-  color: var(--color-ink);
-}
+html { background: var(--color-desktop); color: #000; }
 
 body {
   min-height: 100vh;
-  /* P&ID sheet: a faint dot grid over industrial grey. */
+  font-family: var(--font-ui);
+  font-size: 13px;
   background-color: var(--color-desktop);
-  background-image: radial-gradient(circle, rgba(20, 32, 47, 0.14) 1px, transparent 1.4px);
-  background-size: 15px 15px;
-  font-feature-settings: "cv11", "ss01";
+  background-image: radial-gradient(circle, rgba(0, 0, 0, 0.16) 1px, transparent 1.3px);
+  background-size: 14px 14px;
 }
 
-/* The old dark scanline overlay is now a no-op; kept so layout need not change. */
 .scanlines::before { content: none; }
-
 a { color: inherit; text-decoration: none; }
-::selection { background: var(--color-alarm); color: #14202f; }
+::selection { background: #000080; color: #fff; }
 
 /* -------------------------------------------------------------------------- */
-/* Beveled panels — the core motif                                            */
+/* Retro reset — square everything, then hand-round only the round things     */
 /* -------------------------------------------------------------------------- */
 
-.card {
-  background: var(--color-panel-raised);
-  border-radius: 0;
-  border: 1px solid;
-  border-top-color: var(--bevel-hi);
-  border-left-color: var(--bevel-hi);
-  border-right-color: var(--bevel-lo);
-  border-bottom-color: var(--bevel-lo);
-  box-shadow: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #b6b2a6;
-}
+*, [class*="rounded"] { border-radius: 0 !important; }
+.led, .is-round { border-radius: 50% !important; }
 
-/* A recessed well: inputs, code blocks, wells inside panels. */
-.bevel-in {
-  background: var(--color-panel-sunken);
-  border-radius: 0;
-  border: 1px solid;
-  border-top-color: var(--bevel-lo);
-  border-left-color: var(--bevel-lo);
-  border-right-color: var(--bevel-hi);
-  border-bottom-color: var(--bevel-hi);
-  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.28);
-}
+/* -------------------------------------------------------------------------- */
+/* The Win9x bevels (98.css-style four-tone box-shadows)                      */
+/* -------------------------------------------------------------------------- */
 
-/* Classic raised control (buttons). */
+/* Raised chassis: windows, panels, cards. */
+.card,
 .bevel-out {
-  border-radius: 0;
-  border: 1px solid;
-  border-top-color: var(--bevel-hi);
-  border-left-color: var(--bevel-hi);
-  border-right-color: var(--bevel-lo);
-  border-bottom-color: var(--bevel-lo);
-  box-shadow: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #a8a498;
-}
-.bevel-out:active {
-  border-top-color: var(--bevel-lo);
-  border-left-color: var(--bevel-lo);
-  border-right-color: var(--bevel-hi);
-  border-bottom-color: var(--bevel-hi);
-  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.25);
+  background: var(--w95-face);
+  border: none;
+  box-shadow:
+    inset -1px -1px 0 var(--w95-dark),
+    inset  1px  1px 0 var(--w95-hilite),
+    inset -2px -2px 0 var(--w95-shadow),
+    inset  2px  2px 0 var(--w95-light);
 }
 
-/* A navy HMI titlebar, as on a window or a panel header. */
-.hmi-titlebar {
-  background: linear-gradient(180deg, var(--color-navy-light), var(--color-navy));
-  color: #eef3fb;
-  border-bottom: 1px solid var(--color-navy-deep);
-  letter-spacing: 0.06em;
+/* Pressed state for anything raised that is interactive. */
+.bevel-out:active,
+button:active:not(.title-btn) {
+  box-shadow:
+    inset -1px -1px 0 var(--w95-hilite),
+    inset  1px  1px 0 var(--w95-dark),
+    inset -2px -2px 0 var(--w95-light),
+    inset  2px  2px 0 var(--w95-shadow);
+}
+
+/* Sunken field: inputs, wells, readouts. */
+.bevel-in,
+input:not([type="radio"]):not([type="checkbox"]),
+textarea,
+select {
+  background: var(--color-field) !important;
+  color: #000;
+  border: none !important;
+  box-shadow:
+    inset -1px -1px 0 var(--w95-hilite),
+    inset  1px  1px 0 var(--w95-shadow),
+    inset -2px -2px 0 var(--w95-light),
+    inset  2px  2px 0 var(--w95-dark);
+}
+input:focus, textarea:focus, select:focus { outline: 1px dotted #000; outline-offset: -4px; }
+
+/* Every button gets the raised chassis bevel (backgrounds still override). */
+button {
+  border: none;
+  box-shadow:
+    inset -1px -1px 0 var(--w95-dark),
+    inset  1px  1px 0 var(--w95-hilite),
+    inset -2px -2px 0 var(--w95-shadow),
+    inset  2px  2px 0 var(--w95-light);
+}
+button:focus-visible { outline: 1px dotted #000; outline-offset: -4px; }
+
+/* -------------------------------------------------------------------------- */
+/* Title bars + window buttons                                                */
+/* -------------------------------------------------------------------------- */
+
+.title-bar {
+  background: linear-gradient(90deg, #000080, #1084d0);
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.title-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 18px;
+  height: 16px;
+  background: var(--w95-face);
+  color: #000;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 1;
+  box-shadow:
+    inset -1px -1px 0 var(--w95-dark),
+    inset  1px  1px 0 var(--w95-hilite),
+    inset -2px -2px 0 var(--w95-shadow),
+    inset  2px  2px 0 var(--w95-light);
 }
 
 /* The amber caution/alarm strip. */
 .hmi-alarm {
-  background: linear-gradient(180deg, #ffc042, var(--color-alarm));
+  background: var(--color-alarm);
   color: #241a05;
-  border-top: 1px solid #ffd980;
-  border-bottom: 1px solid #b9791a;
+  box-shadow: inset 0 1px 0 #ffd980, inset 0 -1px 0 #b9791a;
 }
 
-/* An equipment/instrument tag: red plate, white mono text — like a P&ID label. */
-.tag-plate {
-  background: var(--color-trip);
-  color: #fff;
-  font-family: var(--font-mono);
-  letter-spacing: 0.04em;
-  border-radius: 0;
+/* An etched group-box, like the profile fieldsets on the reference dialog. */
+.group-box {
+  background: var(--w95-face);
+  box-shadow: inset -1px -1px 0 #fff, inset 1px 1px 0 var(--w95-shadow);
+  border-top: 1px solid var(--w95-shadow);
+  border-left: 1px solid var(--w95-shadow);
 }
 
-/* A small status LED. */
-.led { display: inline-block; width: 8px; height: 8px; border-radius: 50%; box-shadow: 0 0 4px currentColor; }
+/* Equipment/instrument tag: red plate, white mono text. */
+.tag-plate { background: var(--color-trip); color: #fff; font-family: var(--font-mono); }
+
+.led { display: inline-block; width: 8px; height: 8px; box-shadow: 0 0 3px currentColor; }
 
 /* -------------------------------------------------------------------------- */
-/* Prose (rendered Markdown task bodies), tuned for the light panel           */
+/* Prose (rendered Markdown), Win9x dialog styling                            */
 /* -------------------------------------------------------------------------- */
 
-.prose { line-height: 1.7; color: var(--color-ink-dim); }
+.prose { line-height: 1.6; color: #000; }
 .prose h2 {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   font-weight: 700;
-  margin: 2rem 0 0.75rem;
-  color: var(--color-navy);
-  border-bottom: 2px solid var(--color-navy);
-  padding-bottom: 0.35rem;
-  letter-spacing: 0.01em;
+  margin: 1.8rem 0 0.7rem;
+  color: #fff;
+  background: linear-gradient(90deg, #000080, #1084d0);
+  padding: 0.25rem 0.6rem;
+  letter-spacing: 0.02em;
 }
 .prose h3 {
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-weight: 700;
-  margin: 1.5rem 0 0.5rem;
-  color: var(--color-hazard-dim);
+  margin: 1.4rem 0 0.5rem;
+  color: #000080;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
+  border-bottom: 1px solid var(--w95-shadow);
+  box-shadow: 0 1px 0 #fff;
+  padding-bottom: 0.25rem;
 }
-.prose p { margin: 0.85rem 0; color: var(--color-ink-dim); }
-.prose ul, .prose ol { margin: 0.85rem 0; padding-left: 1.5rem; }
-.prose li { margin: 0.35rem 0; }
-.prose li::marker { color: var(--color-hazard); }
-.prose strong { color: var(--color-ink); font-weight: 700; }
-.prose a { color: var(--color-info); text-decoration: underline; text-underline-offset: 2px; }
+.prose p { margin: 0.75rem 0; color: #1a1a1a; }
+.prose ul, .prose ol { margin: 0.75rem 0; padding-left: 1.5rem; }
+.prose li { margin: 0.3rem 0; }
+.prose li::marker { color: #000080; }
+.prose strong { color: #000; font-weight: 700; }
+.prose a { color: #0000cc; text-decoration: underline; }
 .prose code {
   font-family: var(--font-mono);
-  font-size: 0.85em;
-  background: var(--color-panel-sunken);
-  border: 1px solid #a8a498;
-  border-radius: 0;
-  padding: 0.05rem 0.35rem;
-  color: var(--color-hazard-dim);
+  font-size: 0.9em;
+  background: #fff;
+  padding: 0 0.25rem;
+  color: #a05000;
+  box-shadow: inset -1px -1px 0 #fff, inset 1px 1px 0 var(--w95-shadow);
 }
 .prose pre {
-  background: #12233d;              /* a dark terminal well on the light sheet */
-  color: #d7e2f2;
-  border-radius: 0;
-  border: 1px solid var(--bevel-lo);
-  box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.5);
-  padding: 0.95rem 1.1rem;
+  background: #000080;               /* blue "DOS" readout panel */
+  color: #d7d7d7;
+  padding: 0.85rem 1rem;
   overflow-x: auto;
-  margin: 1.1rem 0;
-  font-size: 0.83rem;
-  line-height: 1.5;
+  margin: 1rem 0;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.45;
+  box-shadow:
+    inset -1px -1px 0 #fff, inset 1px 1px 0 var(--w95-shadow),
+    inset -2px -2px 0 var(--w95-light), inset 2px 2px 0 var(--w95-dark);
 }
-.prose pre code { background: none; border: none; padding: 0; color: #d7e2f2; }
-.prose table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 1.1rem 0;
-  font-size: 0.88rem;
-  border: 1px solid var(--bevel-lo);
-}
-.prose th, .prose td { border: 1px solid #a8a498; padding: 0.5rem 0.75rem; text-align: left; }
-.prose th { background: var(--color-navy); color: #eef3fb; font-weight: 600; letter-spacing: 0.02em; }
-.prose td { color: var(--color-ink-dim); }
-.prose tr:nth-child(even) td { background: rgba(0, 0, 0, 0.03); }
+.prose pre code { background: none; padding: 0; color: #c7f0c7; box-shadow: none; }
+.prose table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
+.prose th, .prose td { border: 1px solid var(--w95-shadow); padding: 0.4rem 0.7rem; text-align: left; }
+.prose th { background: #000080; color: #fff; font-weight: 700; }
+.prose td { color: #1a1a1a; background: #fff; }
+.prose tr:nth-child(even) td { background: #eeeeee; }
 .prose blockquote {
-  border-left: 4px solid var(--color-alarm);
-  background: rgba(245, 166, 35, 0.12);
-  padding: 0.5rem 0.9rem;
-  margin: 1.1rem 0;
-  color: var(--color-ink-dim);
+  border-left: 3px solid #a05000;
+  background: #fff8e6;
+  padding: 0.5rem 0.8rem;
+  margin: 1rem 0;
+  color: #1a1a1a;
 }
 
-@keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-.live-dot { animation: pulse-dot 1.4s ease-in-out infinite; }
+@keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+.live-dot { animation: pulse-dot 1.2s steps(2, jump-none) infinite; }
