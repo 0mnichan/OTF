@@ -15,41 +15,47 @@ export default async function HomePage() {
 
   return (
     <div className="flex flex-col gap-12">
-      {/* Hero */}
-      <section className="relative overflow-hidden rounded-2xl border border-[var(--color-panel-border)] bg-[var(--color-panel-raised)] px-6 py-12 sm:px-12 sm:py-16">
-        <div className="pointer-events-none absolute -right-10 -top-10 opacity-[0.06]">
-          <Icon.gauge size={280} />
+      {/* Hero — a process-overview panel */}
+      <section className="card overflow-hidden">
+        <div className="hmi-titlebar mono flex items-center justify-between px-4 py-1.5 text-[11px] font-semibold">
+          <span>P&amp;ID-001 · PLANT OVERVIEW · SHEET 1/1</span>
+          <span className="hidden sm:inline">REV 04 · OTF/range</span>
         </div>
-        <div className="relative max-w-2xl">
-          <div className="mono mb-4 inline-flex items-center gap-2 rounded-full border border-[var(--color-hazard-dim)] px-3 py-1 text-xs text-[var(--color-hazard)]">
-            <span className="live-dot h-1.5 w-1.5 rounded-full bg-[var(--color-hazard)]" />
-            OT / ICS SECURITY RANGE
+        <div className="relative overflow-hidden px-6 py-12 sm:px-12 sm:py-16">
+          <div className="pointer-events-none absolute -right-10 -top-6 opacity-[0.07]">
+            <Icon.gauge size={280} />
           </div>
-          <h1 className="text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
-            Break the plant.<br />
-            <span className="text-[var(--color-hazard)]">Not a real one.</span>
-          </h1>
-          <p className="mt-5 text-lg text-[var(--color-ink-dim)]">
-            Hands-on capture-the-flag for industrial control systems. Overflow a water tank, open a
-            substation breaker, pivot from a phished laptop down to a reactor PLC — against
-            simulations that behave like the real thing, speaking Modbus, DNP3, IEC-104 and S7comm.
-          </p>
-          <p className="mt-3 text-[var(--color-ink-faint)]">
-            The flag is never just a string. It is a process state you have to actually cause.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              href={user ? '/rooms' : '/register'}
-              className="flex items-center gap-2 rounded-lg bg-[var(--color-hazard)] px-5 py-2.5 font-medium text-black hover:brightness-110"
-            >
-              {user ? 'Enter the range' : 'Enlist — it is free'} <Icon.chevronRight size={18} />
-            </Link>
-            <Link
-              href="/paths/ics-fundamentals"
-              className="flex items-center gap-2 rounded-lg border border-[var(--color-panel-border)] px-5 py-2.5 font-medium hover:bg-[var(--color-panel)]"
-            >
-              <Icon.path size={18} /> Start the fundamentals path
-            </Link>
+          <div className="relative max-w-2xl">
+            <div className="mono mb-4 inline-flex items-center gap-2 bg-[var(--color-alarm)] px-2.5 py-1 text-[11px] font-bold tracking-wide text-[#241a05]">
+              <span className="live-dot led" style={{ color: '#b3231b' }} />
+              OT / ICS SECURITY RANGE
+            </div>
+            <h1 className="text-4xl font-bold leading-tight tracking-tight text-[var(--color-navy)] sm:text-5xl">
+              Break the plant.<br />
+              <span className="text-[var(--color-hazard)]">Not a real one.</span>
+            </h1>
+            <p className="mt-5 text-lg text-[var(--color-ink-dim)]">
+              Hands-on capture-the-flag for industrial control systems. Overflow a water tank, open a
+              substation breaker, pivot from a phished laptop down to a reactor PLC — against
+              simulations that behave like the real thing, speaking Modbus, DNP3, IEC-104 and S7comm.
+            </p>
+            <p className="mt-3 text-[var(--color-ink-faint)]">
+              The flag is never just a string. It is a process state you have to actually cause.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link
+                href={user ? '/rooms' : '/register'}
+                className="bevel-out mono flex items-center gap-2 bg-[var(--color-alarm)] px-5 py-2.5 text-sm font-bold uppercase tracking-wide text-[#241a05] hover:brightness-105"
+              >
+                {user ? 'Enter the range' : 'Enlist — free'} <Icon.chevronRight size={18} />
+              </Link>
+              <Link
+                href="/paths/ics-fundamentals"
+                className="bevel-out mono flex items-center gap-2 bg-[var(--color-panel-raised)] px-5 py-2.5 text-sm font-bold uppercase tracking-wide text-[var(--color-navy)] hover:brightness-105"
+              >
+                <Icon.path size={18} /> Fundamentals path
+              </Link>
+            </div>
           </div>
         </div>
       </section>
