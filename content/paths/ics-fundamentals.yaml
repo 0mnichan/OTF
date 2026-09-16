@@ -1,0 +1,19 @@
+slug: ics-fundamentals
+title: ICS Fundamentals
+summary: >-
+  Start here. From the priorities that make OT security a different discipline,
+  to reading Modbus off the wire, to your first hands-on process compromise.
+description: >-
+  Three rooms that take you from never having touched a plant network to standing
+  up in front of a live control loop and bending it to your will. No prior OT
+  experience assumed — only that you are willing to think about consequences that
+  are physical rather than digital. Finish this path and you understand the shape
+  of the field, the protocol that underpins half of it, and what it feels like to
+  make a simulated plant do something it was built never to do.
+difficulty: beginner
+icon: graduation-cap
+order: 10
+rooms:
+  - welcome-to-the-plant
+  - modbus-101
+  - clearwater-level-control

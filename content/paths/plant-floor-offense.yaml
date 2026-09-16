@@ -1,0 +1,21 @@
+slug: plant-floor-offense
+title: Plant Floor Offense & Defense
+summary: >-
+  The deep end. Grid forensics and detection engineering, PLC program reverse
+  engineering, and a full IT-to-OT pivot through every boundary the Purdue model
+  is meant to defend.
+description: >-
+  For those who have finished the fundamentals and want the real work. You will
+  reconstruct a substation intrusion and prove you can detect it, read ladder
+  logic well enough to find a back door someone left in a controller, and finally
+  chain an entire attack from a phished corporate laptop down to a reactor PLC.
+  This path deliberately mixes red and blue: the same person who can open a
+  breaker should be able to write the rule that catches it. Both belong to
+  competent OT security work, and both are graded here.
+difficulty: advanced
+icon: swords
+order: 20
+rooms:
+  - silent-substation
+  - ladder-logic-autopsy
+  - bridgehead

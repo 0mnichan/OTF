@@ -1,0 +1,50 @@
+slug: clearwater-level-control
+title: "Clearwater: Level Control"
+summary: >-
+  A working water treatment tank: a physics simulation, a real soft-PLC running
+  ladder logic, and a live HMI you can watch. Recon the segment, find the pump
+  control and the alarm setpoint, and overflow the clarifier — without tripping
+  the high-high alarm that would give you away.
+difficulty: medium
+purdue_levels: [0, 1, 2]
+protocols: [modbus]
+attack_ics: [T0836, T0855, T0831, T0832]
+tags: [modbus, process-control, hmi, openplc, flagship]
+est_minutes: 90
+author: OTF
+free: true
+published: true
+order: 30
+banner: "The flag is not a string. It is a flooded tank. You have to actually cause it."
+prereqs: [modbus-101]
+lab:
+  ttl_minutes: 90
+  briefing: >-
+    Clearwater WTP, clarifier tank T-101. A soft-PLC (10.13.37.20:502) runs the
+    level control loop; an HMI at hmi.lab shows the operator's view; the tank
+    physics run in a simulator you cannot see directly, only through the process.
+    Your shell sits on the control LAN. There is no internet. Do not assume the
+    HMI is showing you the truth once you start writing.
+  services:
+    - name: attacker
+      image: otf/attacker-shell:latest
+      expose: terminal
+      hostname: attacker.lab
+      label: Attacker shell
+    - name: plc
+      image: otf/clearwater-plc:latest
+      expose: none
+      hostname: plc.lab
+      label: Clearwater PLC (Modbus/TCP 502)
+      env:
+        OTF_FLAG_REF: "clearwater-level-control.overflow"
+      cpus: 0.5
+      memory_mb: 256
+    - name: hmi
+      image: otf/clearwater-hmi:latest
+      expose: http
+      port: 8080
+      hostname: hmi.lab
+      label: Operator HMI
+      cpus: 0.5
+      memory_mb: 256

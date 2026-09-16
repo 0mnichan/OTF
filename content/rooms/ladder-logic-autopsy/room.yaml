@@ -1,0 +1,39 @@
+slug: ladder-logic-autopsy
+title: Ladder Logic Autopsy
+summary: >-
+  Someone left a back door in a PLC program. You have the exported logic from a
+  bottling-line controller. Read the ladder and Structured Text, find the
+  hardcoded maintenance bypass that defeats the bottle-jam interlock, and trigger
+  it on the live runtime.
+difficulty: hard
+purdue_levels: [1, 2]
+protocols: [modbus]
+attack_ics: [T0873, T0839, T0836, T0851]
+tags: [ladder-logic, structured-text, reverse-engineering, openplc]
+est_minutes: 90
+author: OTF
+free: true
+published: true
+order: 50
+banner: "The vulnerability is in the program, not the protocol. Learn to read the program."
+prereqs: [clearwater-level-control]
+lab:
+  ttl_minutes: 75
+  briefing: >-
+    Bottling line B3. The controller's exported program is in ~/artifacts
+    (ladder.md and program.st). A live soft-PLC runs the same logic at
+    plc.lab:502. Read the logic first; the runtime is for confirming what you
+    found, not for blind poking.
+  services:
+    - name: attacker
+      image: otf/attacker-shell:latest
+      expose: terminal
+      hostname: attacker.lab
+      label: Attacker shell
+    - name: plc
+      image: otf/bottling-plc:latest
+      expose: none
+      hostname: plc.lab
+      label: Bottling line PLC (Modbus/TCP 502)
+      env:
+        OTF_FLAG_REF: "ladder-logic-autopsy.bypass"

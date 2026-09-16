@@ -1,0 +1,17 @@
+slug: welcome-to-the-plant
+title: Welcome to the Plant
+summary: >-
+  Why securing a water treatment works is not the same job as securing a bank.
+  The Purdue model, the equipment you will meet, and the protocols that run the
+  physical world.
+difficulty: intro
+purdue_levels: [0, 1, 2, 3, 4, 5]
+protocols: [modbus, dnp3, iec-104, s7comm, ethernet-ip, opc-ua]
+attack_ics: []
+tags: [fundamentals, theory, no-lab]
+est_minutes: 40
+author: OTF
+free: true
+published: true
+order: 10
+banner: "Induction. Read this before you touch anything."

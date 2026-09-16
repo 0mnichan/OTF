@@ -1,0 +1,62 @@
+slug: bridgehead
+title: Bridgehead
+summary: >-
+  The full chain. Start on a phished engineer's workstation in corporate IT and
+  work your way down the Purdue model — through the IT/OT firewall, onto the
+  historian in the DMZ, across to the engineering workstation, and finally to the
+  PLC. Four flags, one plant, every boundary that should have stopped you.
+difficulty: insane
+purdue_levels: [1, 2, 3, 4]
+protocols: [modbus, s7comm, opc-ua]
+attack_ics: [T0866, T0859, T0843, T0812, T0836]
+tags: [pivot, it-ot, historian, engineering-workstation, boss, multi-flag]
+est_minutes: 180
+author: OTF
+free: true
+published: true
+order: 60
+banner: "Everything you have learned, in one plant, from the outside in."
+prereqs: [clearwater-level-control, silent-substation, ladder-logic-autopsy]
+lab:
+  ttl_minutes: 180
+  briefing: >-
+    You have a foothold: a shell on WIN-ENG01 (172.16.4.15), a domain
+    workstation in the corporate LAN (Level 4) of Meridian Chemical. Somewhere
+    below you is a plant. Between you and it are a firewall, a DMZ, and every
+    misconfiguration this platform has been teaching you to expect. Enumerate,
+    pivot, and descend. Four flags mark the boundaries you cross.
+  services:
+    - name: foothold
+      image: otf/foothold-workstation:latest
+      expose: terminal
+      hostname: win-eng01.corp
+      label: WIN-ENG01 (your foothold, Level 4)
+      cpus: 0.5
+      memory_mb: 512
+    - name: historian
+      image: otf/historian-dmz:latest
+      expose: none
+      hostname: historian.dmz
+      label: Process historian (Level 3.5 DMZ)
+      env:
+        OTF_FLAG_REF: "bridgehead.historian"
+      cpus: 0.5
+      memory_mb: 384
+    - name: ews
+      image: otf/engineering-workstation:latest
+      expose: none
+      hostname: ews.plant
+      label: Engineering workstation (Level 2)
+      env:
+        OTF_FLAG_REF: "bridgehead.ews"
+      cpus: 0.5
+      memory_mb: 384
+    - name: plc
+      image: otf/meridian-plc:latest
+      expose: none
+      hostname: plc.plant
+      label: Reactor PLC (Level 1, Modbus + S7comm)
+      env:
+        OTF_FLAG_REF: "bridgehead.plc"
+      cpus: 0.5
+      memory_mb: 256

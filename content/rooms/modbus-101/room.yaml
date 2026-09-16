@@ -1,0 +1,42 @@
+slug: modbus-101
+title: Modbus 101
+summary: >-
+  Meet the protocol that runs half the plant floor. Analyse a capture, then
+  interrogate a live Modbus device, map its register space, and read the flag
+  out of a holding register that was never meant to be reachable.
+difficulty: easy
+purdue_levels: [1, 2]
+protocols: [modbus]
+attack_ics: [T0846, T0861, T0868]
+tags: [modbus, recon, enumeration, pcap]
+est_minutes: 45
+author: OTF
+free: true
+published: true
+order: 20
+banner: "Your first live target. It has no idea you are there, and no way to care."
+prereqs: [welcome-to-the-plant]
+lab:
+  ttl_minutes: 60
+  briefing: >-
+    A single Modbus/TCP device is exposed on the lab network at
+    plc.lab (10.13.37.10), port 502. Your attacker shell has pymodbus,
+    modbus-cli, nmap and the NSE modbus scripts preinstalled. Nothing here
+    can reach the internet — everything you need is on the segment.
+  services:
+    - name: attacker
+      image: otf/attacker-shell:latest
+      expose: terminal
+      hostname: attacker.lab
+      label: Attacker shell
+      cpus: 0.5
+      memory_mb: 256
+    - name: plc
+      image: otf/modbus-plc:latest
+      expose: none
+      hostname: plc.lab
+      label: Target PLC (Modbus/TCP 502)
+      env:
+        OTF_FLAG_REF: "modbus-101.reg-flag"
+      cpus: 0.25
+      memory_mb: 128

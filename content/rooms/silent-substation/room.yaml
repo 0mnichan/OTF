@@ -1,0 +1,34 @@
+slug: silent-substation
+title: Silent Substation
+summary: >-
+  A distribution substation went dark and a breaker opened with no operator
+  command behind it. You have the IEC-104 capture from the control centre link.
+  Reconstruct the intrusion, attribute the rogue master, build the timeline —
+  then write a detection rule that is graded against clean and malicious traffic.
+difficulty: medium
+purdue_levels: [1, 2, 3]
+protocols: [iec-104, dnp3]
+attack_ics: [T0855, T0823, T0813, T0878]
+tags: [iec-104, forensics, incident-response, detection, blue-team]
+est_minutes: 75
+author: OTF
+free: true
+published: true
+order: 40
+banner: "A fictionalised recreation, inspired by real grid incidents. Every packet here is ours."
+prereqs: [modbus-101]
+lab:
+  ttl_minutes: 60
+  briefing: >-
+    You are handed substation-incident.pcap in ~/artifacts and a grading
+    harness. No live target this room — the work is analysis and detection
+    engineering. Write your Suricata/Zeek rule to ~/work/detect.rules and run
+    ~/grade to score it against held-out clean and malicious captures.
+  services:
+    - name: analyst
+      image: otf/analyst-shell:latest
+      expose: terminal
+      hostname: analyst.lab
+      label: Analyst workstation (Wireshark CLI, Zeek, Suricata, grader)
+      cpus: 0.75
+      memory_mb: 512
