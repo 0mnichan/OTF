@@ -23,7 +23,7 @@ questions:
     prompt: >-
       Set the bypass coil, then trip the jam sensor on the live PLC. When the
       conveyor keeps running through an active jam, the runtime emits a witness
-      flag into holding registers 50-57. Recover and submit it.
+      flag into holding registers 50-65. Recover and submit it.
     kind: dynamic
     flag_prefix: OTF
     points: 30
@@ -34,7 +34,7 @@ questions:
           Watch the conveyor-run register stay TRUE despite the jam.
         cost: 8
       - body: >-
-          Read holding registers 50..58 once the run-through condition holds.
+          Read holding registers 50..66 once the run-through condition holds.
           Decode ASCII, two bytes per register, big-endian.
         cost: 12
     explain: >-
@@ -78,7 +78,7 @@ c.write_coil(address=9, value=True)        # MAINT_BYPASS := TRUE
 c.write_coil(address=8, value=True)        # (confirm the jam-sensor mapping from program.st)
 
 time.sleep(2)
-regs = c.read_holding_registers(address=50, count=8).registers
+regs = c.read_holding_registers(address=50, count=16).registers
 print('witness:', b''.join(struct.pack('>H', r) for r in regs))
 c.close()
 PY

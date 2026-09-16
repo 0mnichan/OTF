@@ -1,0 +1,15 @@
+{
+  "name": "otf-orchestrator",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Spawns and reaps per-player OT lab stacks for OTF.",
+  "main": "server.mjs",
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "dockerode": "^4.0.9"
+  }
+}

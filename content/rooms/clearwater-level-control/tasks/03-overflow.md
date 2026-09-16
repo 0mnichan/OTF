@@ -41,7 +41,7 @@ questions:
   - ref: overflow
     prompt: >-
       Drive tank T-101 to overflow (true level >= 110%). On overflow, the
-      simulator releases the objective flag into holding registers 40-47 as
+      simulator releases the objective flag into holding registers 40-55 as
       ASCII. Recover and submit it.
     kind: dynamic
     flag_prefix: OTF
@@ -53,7 +53,7 @@ questions:
           filling from 60% to 110% takes a little time.
         cost: 8
       - body: >-
-          Read holding registers 40..48 once input register 2 hits 110. Decode
+          Read holding registers 40..56 once input register 2 hits 110. Decode
           two ASCII bytes per register, big-endian. That printable run is the flag.
         cost: 12
     explain: >-
@@ -86,7 +86,7 @@ while True:
     lvl = c.read_input_registers(address=2, count=1).registers[0]
     print('level', lvl)
     if lvl >= 110:
-        regs = c.read_holding_registers(address=40, count=8).registers
+        regs = c.read_holding_registers(address=40, count=16).registers
         flag = b''.join(struct.pack('>H', r) for r in regs)
         print('FLAG:', flag)
         break

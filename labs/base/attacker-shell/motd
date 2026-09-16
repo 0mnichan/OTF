@@ -1,0 +1,14 @@
+
+  ██████╗ ████████╗███████╗
+ ██╔═══██╗╚══██╔══╝██╔════╝   OT/ICS Cyber Range — attacker shell
+ ██║   ██║   ██║   █████╗      Everything here is a simulation.
+ ██║   ██║   ██║   ██╔══╝      This segment has NO internet egress.
+ ╚██████╔╝   ██║   ██║
+  ╚═════╝    ╚═╝   ╚═╝
+
+ Tooling: nmap (+NSE modbus-discover/modbus-slave), tshark, tcpdump, scapy,
+          python3 + pymodbus, modbus-cli, nc. Helpers in /opt/toolbox:
+            mbread  <host> <addr> <count>     read holding registers
+            mbscan  <cidr>                    find Modbus hosts on the segment
+          Room artifacts (PCAPs etc.) are in ~/artifacts.
+
