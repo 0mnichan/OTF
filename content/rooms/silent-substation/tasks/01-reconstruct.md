@@ -26,7 +26,7 @@ questions:
         cost: 6
     explain: >-
       The rogue master never does the patient polling a real front-end does. It
-      connects, issues commands, and leaves — no baseline, no monitoring
+      connects, issues commands, and leaves - no baseline, no monitoring
       direction traffic, just control. That behavioural gap is more reliable
       than any address filter, because addresses can be spoofed and behaviour is
       harder to fake.
@@ -44,7 +44,7 @@ questions:
           IOA.
         cost: 6
     explain: >-
-      TypeID 45, C_SC_NA_1 — Single Command. A single bit, aimed at the
+      TypeID 45, C_SC_NA_1 - Single Command. A single bit, aimed at the
       breaker's Information Object Address, with select-before-operate frequently
       skipped. One packet, one open breaker. The 2016 Ukraine grid attack used
       exactly this class of command against exactly this class of equipment.
@@ -56,7 +56,7 @@ questions:
     points: 15
     explain: >-
       IOA 2001 is the controllable point for breaker CB-1. The IOA is how
-      IEC-104 names a specific point in the RTU's data model — identify it and
+      IEC-104 names a specific point in the RTU's data model - identify it and
       you know precisely what the attacker reached for.
 ---
 
@@ -75,9 +75,9 @@ IEC-104 is the TCP incarnation of IEC 60870-5. A few landmarks:
 
 - **APDUs** come in three formats: **I** (information, carries data and
   commands), **S** (supervisory, acknowledgements), **U** (unnumbered, control
-  of the link itself — STARTDT, STOPDT, TESTFR).
+  of the link itself - STARTDT, STOPDT, TESTFR).
 - Each information object has a **TypeID** (what kind of data or command),
-  a **Cause of Transmission** (why it was sent — spontaneous, interrogation,
+  a **Cause of Transmission** (why it was sent - spontaneous, interrogation,
   activation), and an **IOA** (which point).
 - Monitoring flows from RTU to master; commands flow from master to RTU.
 
@@ -90,5 +90,5 @@ tshark -r ~/artifacts/substation-incident.pcap -Y '104apci' \
 
 Who talked to the RTU that should not have? What command did they send, to which
 point, and when? Build the timeline of the intrusion from connection to breaker
-open. The behavioural signature — a "master" that commands without ever having
-monitored — is the thread to pull.
+open. The behavioural signature - a "master" that commands without ever having
+monitored - is the thread to pull.

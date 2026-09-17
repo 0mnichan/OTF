@@ -6,7 +6,7 @@ import { Icon } from '@/components/icons';
 import { Stat } from '@/components/ui';
 import { timeAgo } from '@/lib/format';
 
-export const metadata = { title: 'Admin — OTF' };
+export const metadata = { title: 'Admin - OTF' };
 
 export default async function AdminPage() {
   await requireRole('admin');
@@ -108,7 +108,7 @@ export default async function AdminPage() {
             audit.map((a: any) => (
               <div key={a.id} className="flex items-center gap-2 px-4 py-2">
                 <span className="text-[var(--color-hazard)]">{a.action}</span>
-                <span className="text-[var(--color-ink-dim)]">{a.username ?? '—'}</span>
+                <span className="text-[var(--color-ink-dim)]">{a.username ?? '-'}</span>
                 <span className="ml-auto text-[var(--color-ink-faint)]">{timeAgo(a.created_at)}</span>
               </div>
             ))

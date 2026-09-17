@@ -15,7 +15,7 @@ questions:
     points: 10
     explain: >-
       Coils and discrete inputs are single bits (on/off). Registers are 16-bit
-      words and hold anything numeric — levels, setpoints, speeds, temperatures.
+      words and hold anything numeric - levels, setpoints, speeds, temperatures.
   - ref: fc-write-single
     prompt: >-
       Which Modbus function code writes a single holding register?
@@ -32,7 +32,7 @@ questions:
   - ref: unit-id
     prompt: >-
       In a Modbus/TCP request, which single-byte field identifies which
-      downstream device the request is for — originally the address of a serial
+      downstream device the request is for - originally the address of a serial
       slave behind a gateway? (two words)
     kind: regex
     pattern: "^(unit ?id|slave ?id|unit identifier)$"
@@ -60,7 +60,7 @@ Everything a Modbus device exposes falls into one of four tables:
 | Input registers | read only | 16-bit | Live sensor reading |
 | Holding registers | read/write | 16-bit | Setpoint, configuration, control value |
 
-The two writable tables — coils and holding registers — are where the danger
+The two writable tables - coils and holding registers - are where the danger
 lives. A writable holding register might be a harmless display scaling factor,
 or it might be the high-level alarm setpoint on a tank you are about to overflow.
 The protocol will not tell you which. You have to find out.
@@ -87,10 +87,10 @@ Modbus/TCP wraps each request in a seven-byte **MBAP** header:
    2 bytes          2 bytes      2 bytes   1 byte      1 byte
 ```
 
-- **Transaction ID** — echoed back so you can match responses to requests.
-- **Protocol ID** — always 0 for Modbus.
-- **Length** — byte count of everything after it.
-- **Unit ID** — which device, behind a gateway, the request is for.
+- **Transaction ID** - echoed back so you can match responses to requests.
+- **Protocol ID** - always 0 for Modbus.
+- **Length** - byte count of everything after it.
+- **Unit ID** - which device, behind a gateway, the request is for.
 
 That is the entire protocol overhead. There is no session, no handshake, no
 credential, no nonce. You open a TCP socket and start asking questions, and a

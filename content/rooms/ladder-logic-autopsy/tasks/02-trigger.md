@@ -15,7 +15,7 @@ questions:
     points: 15
     explain: >-
       The interlock exists to stop the conveyor the instant a jam is sensed.
-      Defeat it and the conveyor keeps feeding the jam — glass breaks, product is
+      Defeat it and the conveyor keeps feeding the jam - glass breaks, product is
       lost, and on a real line the mechanical damage and cleanup are expensive
       and hazardous. The bypass converts a self-protecting machine into a
       self-harming one.
@@ -29,7 +29,7 @@ questions:
     points: 30
     hints:
       - body: >-
-          Write coil 9 TRUE (MAINT_BYPASS). Then assert the jam input — the jam
+          Write coil 9 TRUE (MAINT_BYPASS). Then assert the jam input - the jam
           sensor is mapped to a coil/discrete you can also set for testing.
           Watch the conveyor-run register stay TRUE despite the jam.
         cost: 8
@@ -39,7 +39,7 @@ questions:
         cost: 12
     explain: >-
       The witness flag only appears when the live logic genuinely runs the
-      conveyor while a jam is asserted — proving you reproduced the defeated
+      conveyor while a jam is asserted - proving you reproduced the defeated
       interlock, not just read about it. Each session's flag is unique.
   - ref: remediation
     prompt: >-
@@ -58,11 +58,11 @@ questions:
       reads the program, which you just did. The bypass must be removed from
       normal logic. Where a maintenance override is genuinely needed, it belongs
       behind a physical key switch wired to a real input and a supervised
-      procedure — not a network-writable coil that anyone on the segment can set.
+      procedure - not a network-writable coil that anyone on the segment can set.
 ---
 
 You have found the back door in the code. Now prove it is real by reproducing it
-on the running controller — carefully, because the point of this room is to
+on the running controller - carefully, because the point of this room is to
 understand the consequence, not to flail at the runtime.
 
 ## Set the bypass and trip the jam
@@ -90,11 +90,11 @@ releases the witness flag.
 
 ## Why this room matters
 
-Every other room so far has exploited a protocol. This one exploited a *program* —
+Every other room so far has exploited a protocol. This one exploited a *program* -
 and that is where a very large share of real OT findings actually live. Protocol
 weaknesses are structural and mostly unfixable; logic weaknesses are introduced
 by people, one well-meaning shortcut at a time, and they are found by reading
 code, not sending packets. A maintenance bypass left in production, a debug flag
 mapped to a network-writable point, an interlock that can be ORed out from the
-outside — these are the findings that fill real PLC code-review reports. Learning
+outside - these are the findings that fill real PLC code-review reports. Learning
 to read ladder and Structured Text is what lets you find them.

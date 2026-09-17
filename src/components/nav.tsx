@@ -34,26 +34,25 @@ export async function Nav() {
       <div className="card" style={{ boxShadow: 'inset 0 -1px 0 var(--w95-shadow), inset 0 -2px 0 var(--w95-light)' }}>
         {/* Title bar */}
         <div className="title-bar flex items-center gap-2 px-1.5 py-1">
-          <div className="mx-auto flex w-full max-w-6xl items-center gap-2">
+          <div className="mx-auto flex w-full max-w-[1680px] items-center gap-2">
             <Link href="/" className="flex items-center gap-2">
               <DiamondMark />
               <span className="text-[13px] font-bold tracking-wide">
-                OTF — OT/ICS Cyber Range
+                OTF - OT/ICS Cyber Range
               </span>
             </Link>
             <div className="ml-auto flex items-center gap-2">
               <HmiClock />
               <div className="flex items-center gap-1">
                 <span className="title-btn" aria-hidden>_</span>
-                <span className="title-btn" aria-hidden>▢</span>
-                <span className="title-btn" aria-hidden>✕</span>
+                <span className="xp-close" aria-hidden>✕</span>
               </div>
             </div>
           </div>
         </div>
 
         {/* Menu / toolbar row */}
-        <div className="mx-auto flex max-w-6xl items-center gap-1 px-1.5 py-1">
+        <div className="mx-auto flex max-w-[1680px] items-center gap-1 px-1.5 py-1">
           <nav className="flex items-center gap-0.5">
             {LINKS.map((l) => {
               const I = Icon[l.icon];
@@ -102,7 +101,7 @@ export async function Nav() {
 
       {/* Amber caution sub-strip, like a process-screen alarm banner */}
       <div className="hmi-alarm">
-        <div className="mono mx-auto flex h-6 max-w-6xl items-center gap-3 px-3 text-[10px] font-bold tracking-wide">
+        <div className="mono mx-auto flex h-6 max-w-[1680px] items-center gap-3 px-3 text-[10px] font-bold tracking-wide">
           <span className="flex items-center gap-1"><Icon.alertTriangle size={11} /> TRAINING RANGE</span>
           <span className="opacity-40">|</span>
           <span className="hidden sm:inline">ALL TARGETS SIMULATED</span>

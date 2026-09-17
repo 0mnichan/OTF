@@ -4,7 +4,7 @@ import { get } from '@/lib/db.mjs';
 import { currentUser } from '@/lib/session';
 import { RoomFilters } from './RoomFilters';
 
-export const metadata = { title: 'Rooms — OTF' };
+export const metadata = { title: 'Rooms - OTF' };
 
 export default async function RoomsPage() {
   const user = await currentUser();

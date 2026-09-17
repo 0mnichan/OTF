@@ -2,7 +2,7 @@ slug: blackout-2015-defend
 title: "Blackout 2015: Defend"
 summary: >-
   You have run the attack. Now stop it. Work the 2015 Ukraine intrusion backwards
-  and choose the controls that would have broken the kill chain — segmentation,
+  and choose the controls that would have broken the kill chain - segmentation,
   multi-factor remote access, command allowlisting, and the humble manual
   fallback that actually saved the day.
 difficulty: medium

@@ -1,5 +1,5 @@
 ---
-title: Overflow — and the discipline not to get caught
+title: Overflow - and the discipline not to get caught
 questions:
   - ref: alarm-setpoint-reg
     prompt: >-
@@ -17,7 +17,7 @@ questions:
         cost: 6
     explain: >-
       Register 12 is the alarm threshold. Because it is writable, an attacker can
-      raise it so the alarm never fires even as the level sails past 95% — the
+      raise it so the alarm never fires even as the level sails past 95% - the
       alarm logic is intact, it has just been told the danger line is somewhere
       it will never reach. Sabotaging the safety threshold rather than the
       process itself is a recurring real-world pattern.
@@ -35,7 +35,7 @@ questions:
     points: 15
     explain: >-
       Raise the alarm threshold above the overflow point (register 12 > 110) and
-      the comparison the alarm logic performs is still running perfectly — it
+      the comparison the alarm logic performs is still running perfectly - it
       just never evaluates true, because you moved the goalposts past the edge of
       the field. The tank overflows in silence.
   - ref: overflow
@@ -49,7 +49,7 @@ questions:
     hints:
       - body: >-
           Setpoint high (reg 10), and if you want the stealth badge, alarm
-          threshold above 110 (reg 12) first. Then wait — the outflow is slow, so
+          threshold above 110 (reg 12) first. Then wait - the outflow is slow, so
           filling from 60% to 110% takes a little time.
         cost: 8
       - body: >-
@@ -58,11 +58,11 @@ questions:
         cost: 12
     explain: >-
       This flag exists only because you made a simulated tank physically
-      overflow. There was no string to find — you had to cause a process state.
+      overflow. There was no string to find - you had to cause a process state.
       If you also kept the high-high alarm from firing (register 12 raised
       before the level crossed 95%), you earned the stealth objective: you
       caused the incident and the operator never got a warning. That combination
-      — cause the harm, defeat the safety, suppress the indication — is the OT
+      - cause the harm, defeat the safety, suppress the indication - is the OT
       attack in miniature.
 ---
 
@@ -104,7 +104,7 @@ engagement your access is now a known incident. The alarm compares the measured
 level against a threshold in **holding register 12**. That register is writable.
 
 Raise it above the overflow point *before* the level crosses 95% and the alarm
-logic keeps running flawlessly — it simply never evaluates true, because you have
+logic keeps running flawlessly - it simply never evaluates true, because you have
 moved the danger line past the top of the tank. Add the view-manipulation trick
 from the previous task and the operator's screen stays green throughout.
 

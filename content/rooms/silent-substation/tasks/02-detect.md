@@ -14,7 +14,7 @@ questions:
     correct: 1
     points: 20
     explain: >-
-      The commands themselves are valid IEC-104 — there is no malformed packet to
+      The commands themselves are valid IEC-104 - there is no malformed packet to
       catch. What is anomalous is the *source*: a host issuing control-direction
       APDUs that is not one of the sanctioned masters. Allowlisting the small,
       known set of masters and alerting on command APDUs from anyone else is the
@@ -41,7 +41,7 @@ questions:
         cost: 12
     explain: >-
       The grader emits your token only when you achieve full detection with zero
-      false positives across the held-out set — the same bar a detection would
+      false positives across the held-out set - the same bar a detection would
       have to clear before anyone would deploy it to a live SOC. A rule that
       screams on every command is useless; a rule that stays quiet on the real
       attack is worse. The token is unique to your grading run.
@@ -57,13 +57,13 @@ questions:
     explain: >-
       Select-Before-Operate. The master must first 'select' the point and be
       acknowledged, then 'operate'. It is a safety interlock against accidental
-      or stray single commands — and when RTUs are configured to accept
+      or stray single commands - and when RTUs are configured to accept
       direct-operate without it, a single spoofed command is all it takes. Part
       of hardening this substation is enforcing SBO on controllable points.
 ---
 
 Forensics tells you what happened. Detection engineering is what stops it
-happening unseen next time — and it is the part most CTF platforms skip entirely.
+happening unseen next time - and it is the part most CTF platforms skip entirely.
 This room grades it directly.
 
 ## The detection problem
@@ -78,11 +78,11 @@ definition, doing something it has no business doing. That is your rule.
 
 ## Write it and grade it
 
-Author a Suricata rule (or a Zeek script — the grader accepts either) to
+Author a Suricata rule (or a Zeek script - the grader accepts either) to
 `~/work/detect.rules`:
 
 ```
-# starting point — refine the source logic so benign command traffic is excluded
+# starting point - refine the source logic so benign command traffic is excluded
 alert ip !$IEC104_MASTERS any -> $RTU_NET 2404 ( \
     msg:"IEC-104 command from unsanctioned master"; \
     flow:to_server,established; \
@@ -97,8 +97,8 @@ Then:
 ~/grade
 ```
 
-The grader replays six held-out captures — three benign polling sessions and
-three attack variants — through your rule. You pass only with **full detection
+The grader replays six held-out captures - three benign polling sessions and
+three attack variants - through your rule. You pass only with **full detection
 and zero false positives**: every attack caught, every clean session silent. Get
 there and it prints your flag token. That bar is not arbitrary; it is the bar a
 real detection has to clear before a SOC will run it, because a noisy rule gets
@@ -108,6 +108,6 @@ muted and a muted rule catches nothing.
 
 The last question is about prevention, not detection. **Select-Before-Operate**
 would have forced the attacker to select the breaker point and receive
-confirmation before any operate command took effect — an interlock that a single
+confirmation before any operate command took effect - an interlock that a single
 stray or spoofed command cannot satisfy. Enforcing SBO on every controllable
 point is the configuration change that closes this door.

@@ -5,7 +5,7 @@ import { currentUser } from '@/lib/session';
 import { Icon } from '@/components/icons';
 import { DifficultyBadge, ProgressBar } from '@/components/ui';
 
-export const metadata = { title: 'Paths — OTF' };
+export const metadata = { title: 'Paths - OTF' };
 
 export default async function PathsPage() {
   const user = await currentUser();

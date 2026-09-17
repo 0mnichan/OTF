@@ -15,7 +15,7 @@ import { dynamicFlag } from '@/lib/crypto.mjs';
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const room = getRoomBySlug(slug);
-  return { title: room ? `${room.title} — OTF` : 'Room — OTF' };
+  return { title: room ? `${room.title} - OTF` : 'Room - OTF' };
 }
 
 export default async function RoomPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -195,7 +195,7 @@ export default async function RoomPage({ params }: { params: Promise<{ slug: str
           )}
 
           {/* Docker lab panel only when there is no web console and an
-              orchestrator is actually configured — otherwise the web console
+              orchestrator is actually configured - otherwise the web console
               above is the way to play. */}
           {room.hasLab && !room.hasWebLab && orchestratorConfigured && user && lockedBy.length === 0 && (
             <LabPanel roomSlug={room.slug} briefing={room.lab_spec?.briefing ?? ''} available={orchestratorConfigured} />

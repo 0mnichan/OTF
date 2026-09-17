@@ -9,7 +9,7 @@ questions:
     value: 3
     points: 10
     explain: >-
-      FC 3, read holding registers — the bread-and-butter poll of almost every
+      FC 3, read holding registers - the bread-and-butter poll of almost every
       Modbus HMI. It reads a block of registers every cycle and repaints the
       screen from the response.
   - ref: pcap-start
@@ -27,7 +27,7 @@ questions:
     explain: >-
       The poll reads a block starting at register 0. Watch for the difference
       between the wire address (0-based) and the documentation address
-      (often 1-based, e.g. 40001) — a constant source of off-by-one confusion.
+      (often 1-based, e.g. 40001) - a constant source of off-by-one confusion.
   - ref: pcap-count
     prompt: >-
       How many registers does each poll request in that block?
@@ -36,12 +36,12 @@ questions:
     points: 10
     explain: >-
       16 registers per poll. Knowing the size of the polled block tells you how
-      much of the register map the HMI actually cares about — and, by contrast,
+      much of the register map the HMI actually cares about - and, by contrast,
       which registers it never looks at. Attackers love the registers nobody
       watches.
   - ref: pcap-anomaly
     prompt: >-
-      One request in the capture is not part of the HMI's normal read cycle —
+      One request in the capture is not part of the HMI's normal read cycle -
       it writes a value. What function code does that write use? (decimal)
     kind: numeric
     value: 6
@@ -49,7 +49,7 @@ questions:
     explain: >-
       FC 6, write single register. Spotting the one write among hundreds of
       reads is exactly the kind of anomaly a Modbus-aware IDS rule is written to
-      catch — a theme you will return to in the Silent Substation room.
+      catch - a theme you will return to in the Silent Substation room.
 ---
 
 Analysis before action. The capture in this task is a slice of normal traffic
@@ -72,8 +72,8 @@ tshark -r ~/artifacts/plant-poll.pcap -Y modbus \
 
 A healthy Modbus conversation is boringly regular: the same master, the same
 slave, the same function code, the same register block, over and over on a fixed
-interval. That regularity is a gift. Establish it precisely — which function
-code, which starting address, how many registers — and anything that deviates
+interval. That regularity is a gift. Establish it precisely - which function
+code, which starting address, how many registers - and anything that deviates
 becomes obvious.
 
 Somewhere in this capture, exactly one request breaks the pattern. Find the

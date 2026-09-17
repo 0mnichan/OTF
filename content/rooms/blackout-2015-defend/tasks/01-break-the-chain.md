@@ -34,7 +34,7 @@ questions:
     points: 20
     explain: >-
       Segmentation with an IDMZ (Purdue Level 3.5) means an IT foothold cannot
-      reach control systems directly — traffic terminates at brokered services in
+      reach control systems directly - traffic terminates at brokered services in
       the DMZ. This is the reachability half of the equation; MFA is the
       authority half.
   - ref: command-allowlist
@@ -51,7 +51,7 @@ questions:
     points: 15
     explain: >-
       Allowlisting the small, known set of masters that may issue control
-      commands — and alerting on control APDUs from anyone else — catches the
+      commands - and alerting on control APDUs from anyone else - catches the
       "right protocol, wrong source" pattern that legitimate-credential attacks
       produce. You built exactly this rule in Silent Substation.
   - ref: manual-fallback
@@ -102,13 +102,13 @@ to design defences is to walk the kill chain you just used and cut each link.
 
 Each question below targets one link:
 
-- **Reachability** — segmentation + IDMZ so an IT foothold cannot touch control.
-- **Authority** — MFA on remote access so a stolen password is not enough.
-- **Command legitimacy** — allowlist the masters that may issue control, alert on
+- **Reachability** - segmentation + IDMZ so an IT foothold cannot touch control.
+- **Authority** - MFA on remote access so a stolen password is not enough.
+- **Command legitimacy** - allowlist the masters that may issue control, alert on
   the rest (your Silent Substation rule).
-- **Consequence tolerance** — a tested manual/local mode so lost remote control
+- **Consequence tolerance** - a tested manual/local mode so lost remote control
   is recoverable.
-- **Recovery** — signed firmware, offline backups, cold spares, because the real
+- **Recovery** - signed firmware, offline backups, cold spares, because the real
   attack also attacked your ability to recover.
 
 No single control is a silver bullet. Defence in depth means the attacker has to

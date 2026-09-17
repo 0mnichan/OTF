@@ -1,6 +1,6 @@
 /**
  * Password hashing, session tokens, answer normalisation and per-user flags.
- * Everything here uses node:crypto — no external dependencies.
+ * Everything here uses node:crypto - no external dependencies.
  */
 import {
   randomBytes,

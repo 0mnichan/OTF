@@ -1,5 +1,5 @@
 slug: famous-incidents
-title: Famous OT Incidents — Attack & Defend
+title: Famous OT Incidents - Attack & Defend
 summary: >-
   Study the attacks that defined OT security, reproduce one against a simulated
   grid in your browser, then turn around and defend against it. Red and blue on
@@ -8,9 +8,9 @@ description: >-
   This path pairs research with hands-on recreation and defence. You will tour
   Stuxnet, the Ukraine blackouts, TRITON, Colonial Pipeline and Oldsmar; then, in
   the browser console, reproduce the decisive act of the 2015 Ukraine grid attack
-  — opening a breaker over the control network from a compromised seat; and
+  - opening a breaker over the control network from a compromised seat; and
   finally work that same intrusion backwards to choose the controls that break
-  every link in its kill chain. No downloads, no VPN — every target is simulated
+  every link in its kill chain. No downloads, no VPN - every target is simulated
   and playable in the page.
 difficulty: intermediate
 icon: flame

@@ -3,7 +3,7 @@ title: Level 4 → the DMZ
 questions:
   - ref: pivot-principle
     prompt: >-
-      Your foothold in the corporate LAN cannot reach the plant PLC directly —
+      Your foothold in the corporate LAN cannot reach the plant PLC directly -
       the firewall blocks it. Which host is the intended stepping stone, because
       it legitimately talks to both the enterprise and the plant?
     kind: choice
@@ -39,14 +39,14 @@ questions:
           for a saved historian login. That credential still works.
         cost: 15
     explain: >-
-      The path down is almost never an exploit — it is a reused credential, a
+      The path down is almost never an exploit - it is a reused credential, a
       saved connection profile, a trust relationship left in place for
       convenience. The historian let you in because the workstation was allowed
       to, and the workstation had the keys saved. Each session's flag is unique.
 ---
 
-This is the capstone. Everything the earlier rooms taught in isolation — Modbus,
-logic, the Purdue model, the DMZ rule — is here at once, in one plant, and your
+This is the capstone. Everything the earlier rooms taught in isolation - Modbus,
+logic, the Purdue model, the DMZ rule - is here at once, in one plant, and your
 job is to travel the whole depth of it from a single foothold.
 
 Meridian Chemical runs a reactor line. You are phished in: a shell on
@@ -74,14 +74,14 @@ clean (task 4).
 ## Crossing the first boundary
 
 You cannot route to the plant. But you can route to the DMZ, because your
-workstation is allowed to — engineers pull reports from the historian all day.
+workstation is allowed to - engineers pull reports from the historian all day.
 The historian is the one host with a legitimate foot on both sides, which is
 exactly why it is the bridge.
 
 You will not need an exploit to get onto it. You will need what the workstation
 already has: a saved connection profile, a cached credential, a trust the
 environment left in place for the engineer's convenience and never took back.
-Enumerate WIN-ENG01 thoroughly before you scan outward — the key to the next
+Enumerate WIN-ENG01 thoroughly before you scan outward - the key to the next
 door is usually already in your pocket.
 
 ```bash

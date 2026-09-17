@@ -3,7 +3,7 @@ title: "Clearwater: Level Control"
 summary: >-
   A working water treatment tank: a physics simulation, a real soft-PLC running
   ladder logic, and a live HMI you can watch. Recon the segment, find the pump
-  control and the alarm setpoint, and overflow the clarifier — without tripping
+  control and the alarm setpoint, and overflow the clarifier - without tripping
   the high-high alarm that would give you away.
 difficulty: medium
 purdue_levels: [0, 1, 2]

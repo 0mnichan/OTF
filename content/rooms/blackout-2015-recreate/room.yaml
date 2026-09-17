@@ -2,8 +2,8 @@ slug: blackout-2015-recreate
 title: "Blackout 2015: Recreate"
 summary: >-
   December 2015, Ukraine: the first confirmed cyberattack to take down a power
-  grid. Research how the attackers did it, then reproduce the decisive act — open
-  a distribution breaker over the control network from a stolen operator seat —
+  grid. Research how the attackers did it, then reproduce the decisive act - open
+  a distribution breaker over the control network from a stolen operator seat -
   against a simulated feeder RTU in your browser console.
 difficulty: medium
 purdue_levels: [1, 2, 3]
@@ -21,6 +21,6 @@ web_lab:
   scenario: blackout-2015
   briefing: >-
     You are on the substation control LAN (10.20.0.50), on a seat whose
-    credentials were reused from the corporate VPN — exactly as in 2015. Feeder
+    credentials were reused from the corporate VPN - exactly as in 2015. Feeder
     RTU rtu-sub7.grid is at 10.20.0.10. Read engineer_notes.txt, find the breaker
     coil, and open it. Type 'help'.

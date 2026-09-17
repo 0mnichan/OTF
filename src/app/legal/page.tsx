@@ -1,6 +1,6 @@
 import { Icon } from '@/components/icons';
 
-export const metadata = { title: 'Acceptable Use — OTF' };
+export const metadata = { title: 'Acceptable Use - OTF' };
 
 export default function LegalPage() {
   return (
@@ -16,7 +16,7 @@ export default function LegalPage() {
       <p>
         The techniques you learn here are for <strong>authorised testing only</strong>. Do not point
         them at any equipment you do not own and have explicit written permission to test. On a real
-        plant, a misplaced packet is not a finding — it is an incident, and potentially a fatality.
+        plant, a misplaced packet is not a finding - it is an incident, and potentially a fatality.
         OT security exists because the consequences are physical.
       </p>
       <h2>What we simulate, and what we do not</h2>
@@ -39,7 +39,7 @@ export default function LegalPage() {
       </ul>
       <p className="text-sm text-[var(--color-ink-faint)]">
         By using OTF you agree to use what you learn lawfully and ethically. Break the plant here so
-        you never have to break — or fail to defend — a real one.
+        you never have to break - or fail to defend - a real one.
       </p>
     </div>
   );

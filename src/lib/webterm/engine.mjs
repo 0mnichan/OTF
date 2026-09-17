@@ -1,9 +1,9 @@
 /**
- * Browser OT lab — a simulated console + process world, in pure JS.
+ * Browser OT lab - a simulated console + process world, in pure JS.
  *
  * This replaces the Docker labs for web-only play. Each room names a scenario;
  * the room page injects the player's per-user flags, and the simulated devices
- * reveal those exact flags only when the objective is genuinely reached — same
+ * reveal those exact flags only when the objective is genuinely reached - same
  * "physical-consequence flag" idea as the container labs, but entirely
  * client-side. No secret ever ships to the browser: the flag is the player's
  * own, computed server-side and handed in as the reward for solving.
@@ -54,7 +54,7 @@ function blankDevice(sizes = {}) {
  */
 
 const SCENARIOS = {
-  /* Modbus 101 — a single PLC with a flag hidden past the polled block. */
+  /* Modbus 101 - a single PLC with a flag hidden past the polled block. */
   'modbus-101'(flags) {
     const dev = blankDevice();
     dev.input[7] = 50;
@@ -80,7 +80,7 @@ const SCENARIOS = {
     };
   },
 
-  /* Clearwater — a live tank you flood by commandeering the control loop. */
+  /* Clearwater - a live tank you flood by commandeering the control loop. */
   clearwater(flags) {
     const dev = blankDevice();
     dev.holding[10] = 60;   // setpoint
@@ -114,7 +114,7 @@ const SCENARIOS = {
     };
   },
 
-  /* Blackout '15 — recreate the substation breaker-trip over a control link. */
+  /* Blackout '15 - recreate the substation breaker-trip over a control link. */
   'blackout-2015'(flags) {
     const dev = blankDevice();
     dev.coil[3] = 1;        // breaker CB-1 closed (1 = closed)
@@ -185,13 +185,13 @@ export function tick(world) {
     if (sim.peak >= sim.witnessAt && !world.revealed.pump) {
       asciiToRegisters(sim.flags.pump, 16).forEach((r, i) => (dev.holding[20 + i] = r));
       world.revealed.pump = true;
-      world.alerts.push('T-101 level exceeded 80% — witness value latched to holding[20..35].');
+      world.alerts.push('T-101 level exceeded 80% - witness value latched to holding[20..35].');
     }
     // Overflow at 110%: the flag is released into holding[40..].
     if (sim.level >= 110 && !sim.overflowed) {
       sim.overflowed = true;
       asciiToRegisters(sim.flags.overflow, 16).forEach((r, i) => (dev.holding[40 + i] = r));
-      world.alerts.push('*** T-101 OVERFLOW — clarifier weir breached. Objective flag in holding[40..55]. ***');
+      world.alerts.push('*** T-101 OVERFLOW - clarifier weir breached. Objective flag in holding[40..55]. ***');
     }
   }
 }
@@ -199,7 +199,7 @@ export function tick(world) {
 /* --------------------------------------------------------------- console */
 
 const HELP = [
-  'OT operations console — available commands:',
+  'OT operations console - available commands:',
   '  help                       this help',
   '  cls | clear                clear the screen',
   '  whoami | hostname          who / where you are',
@@ -211,11 +211,11 @@ const HELP = [
   '                             scan the segment / fingerprint a device',
   '  modbus read  <host> <holding|input|coil|discrete> <addr> <count>',
   '  modbus write <host> <holding|coil> <addr> <value>',
-  '                             read / write a device (no auth — that is the lesson)',
+  '                             read / write a device (no auth - that is the lesson)',
   '  status                     summarise the process, if any',
   '',
   'Tip: real Modbus has no authentication. If you can reach TCP/502, you can',
-  'read and write anything. Find WHICH register matters — that is the challenge.',
+  'read and write anything. Find WHICH register matters - that is the challenge.',
 ];
 
 function resolveHost(world, token) {
@@ -250,7 +250,7 @@ export function runCommand(world, raw) {
     case 'cls': case 'clear':
       return { lines: [], clear: true };
     case 'ver':
-      return L('OT Operations Console [Version 1.0] — OTF training range');
+      return L('OT Operations Console [Version 1.0] - OTF training range');
     case 'whoami':
       return L('range\\operator');
     case 'hostname':
@@ -347,7 +347,7 @@ function modbus(world, args) {
     if (world.sim?.type === 'breaker' && t === 'coil' && addr === 3 && !val && !world.sim.opened) {
       if (h.modbus.holding[1] !== 1) return { lines: ['WRITE REJECTED: remote operate disabled (HR1=0)'] };
       world.sim.opened = true;
-      world.alerts.push('*** BREAKER CB-1 OPENED — feeder de-energised. Objective flag: ' + world.sim.flag + ' ***');
+      world.alerts.push('*** BREAKER CB-1 OPENED - feeder de-energised. Objective flag: ' + world.sim.flag + ' ***');
     }
     return { lines: [`OK: wrote ${val} to ${h.name} ${t}[${addr}]`] };
   }

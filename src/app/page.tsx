@@ -15,15 +15,14 @@ export default async function HomePage() {
 
   return (
     <div className="flex flex-col gap-12">
-      {/* Hero — a Win9x "process overview" window */}
+      {/* Hero - a Win9x "process overview" window */}
       <section className="card">
         <div className="title-bar flex items-center gap-2 px-1.5 py-1">
           <Icon.gauge size={14} />
-          <span className="mono text-[12px]">PLANT-OVERVIEW.EXE — P&amp;ID-001 · SHEET 1/1</span>
+          <span className="mono text-[12px]">PLANT-OVERVIEW.EXE - P&amp;ID-001 · SHEET 1/1</span>
           <div className="ml-auto flex items-center gap-1">
             <span className="title-btn">_</span>
-            <span className="title-btn">▢</span>
-            <span className="title-btn">✕</span>
+            <span className="xp-close">✕</span>
           </div>
         </div>
         <div className="relative overflow-hidden px-6 py-10 sm:px-10 sm:py-14">
@@ -34,7 +33,7 @@ export default async function HomePage() {
             <div className="mono mb-4 inline-flex items-center gap-2 bg-[var(--color-alarm)] px-2 py-1 text-[11px] font-bold tracking-wide text-[#241a05]"
               style={{ boxShadow: 'inset -1px -1px 0 #b9791a, inset 1px 1px 0 #ffe1a0' }}>
               <span className="live-dot led" style={{ color: '#a80000' }} />
-              OT / ICS SECURITY RANGE — v1.0
+              OT / ICS SECURITY RANGE - v1.0
             </div>
             <h1 className="text-4xl font-bold leading-tight text-[#000080] sm:text-5xl">
               Break the plant.<br />
@@ -42,7 +41,7 @@ export default async function HomePage() {
             </h1>
             <p className="mt-5 text-[15px] text-black">
               Hands-on capture-the-flag for industrial control systems. Overflow a water tank, open a
-              substation breaker, pivot from a phished laptop down to a reactor PLC — against
+              substation breaker, pivot from a phished laptop down to a reactor PLC - against
               simulations that behave like the real thing, speaking Modbus, DNP3, IEC-104 and S7comm.
             </p>
             <p className="mt-3 text-[13px] text-[var(--color-ink-faint)]">
@@ -53,7 +52,7 @@ export default async function HomePage() {
                 href={user ? '/rooms' : '/register'}
                 className="bevel-out flex items-center gap-2 bg-[var(--w95-face)] px-5 py-2 text-[13px] font-bold text-black"
               >
-                <Icon.bolt size={15} /> {user ? 'Enter the range' : 'Enlist — it is free'}
+                <Icon.bolt size={15} /> {user ? 'Enter the range' : 'Enlist - it is free'}
               </Link>
               <Link
                 href="/paths/ics-fundamentals"
@@ -79,9 +78,9 @@ export default async function HomePage() {
         <h2 className="mb-4 text-xl font-semibold">Why this is not another CTF</h2>
         <div className="grid gap-4 md:grid-cols-3">
           {[
-            { icon: 'droplet' as const, title: 'Physical-consequence flags', body: 'A physics simulation emits the flag only when the plant reaches an unsafe state. You cannot grep for it — you have to overflow the tank.' },
+            { icon: 'droplet' as const, title: 'Physical-consequence flags', body: 'A physics simulation emits the flag only when the plant reaches an unsafe state. You cannot grep for it - you have to overflow the tank.' },
             { icon: 'shield' as const, title: 'Restraint is scored', body: 'Rooms reward hitting the objective without tripping the safety system, the exact discipline real OT red teams are graded on.' },
-            { icon: 'radio' as const, title: 'Blue team is first class', body: 'Defensive rooms grade a detection rule you write against clean and malicious captures — true positives and false positives both count.' },
+            { icon: 'radio' as const, title: 'Blue team is first class', body: 'Defensive rooms grade a detection rule you write against clean and malicious captures - true positives and false positives both count.' },
           ].map((c) => {
             const I = Icon[c.icon];
             return (

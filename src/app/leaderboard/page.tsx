@@ -5,7 +5,7 @@ import { currentUser } from '@/lib/session';
 import { Icon } from '@/components/icons';
 import { pluralize } from '@/lib/format';
 
-export const metadata = { title: 'Leaderboard — OTF' };
+export const metadata = { title: 'Leaderboard - OTF' };
 
 export default async function LeaderboardPage({
   searchParams,

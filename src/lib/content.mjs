@@ -385,8 +385,8 @@ function answerSpec(q) {
  * Write the validated content tree into SQLite.
  *
  * Tasks and questions are replaced wholesale per room, but rooms themselves are
- * upserted by slug so their primary keys — and therefore every player's
- * progress rows — survive a content edit. Question progress is keyed on the
+ * upserted by slug so their primary keys - and therefore every player's
+ * progress rows - survive a content edit. Question progress is keyed on the
  * stable `ref`, remapped below, for the same reason.
  */
 export function syncContent({ quiet = false } = {}) {

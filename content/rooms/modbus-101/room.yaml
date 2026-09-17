@@ -22,7 +22,7 @@ lab:
     A single Modbus/TCP device is exposed on the lab network at
     plc.lab (10.13.37.10), port 502. Your attacker shell has pymodbus,
     modbus-cli, nmap and the NSE modbus scripts preinstalled. Nothing here
-    can reach the internet — everything you need is on the segment.
+    can reach the internet - everything you need is on the segment.
   services:
     - name: attacker
       image: otf/attacker-shell:latest

@@ -11,7 +11,7 @@ import { protocolLabel } from '@/lib/format';
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const path = getPathBySlug(slug);
-  return { title: path ? `${path.title} — OTF` : 'Path — OTF' };
+  return { title: path ? `${path.title} - OTF` : 'Path - OTF' };
 }
 
 export default async function PathPage({ params }: { params: Promise<{ slug: string }> }) {

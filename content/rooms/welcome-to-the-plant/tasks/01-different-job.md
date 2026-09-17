@@ -31,7 +31,7 @@ questions:
       Availability windows in OT are measured in years, not hours. A refinery
       turnaround might happen every three to five years, and any change to a
       safety-related system needs revalidation before it can go live. This is
-      why compensating controls — segmentation, monitoring, access control —
+      why compensating controls - segmentation, monitoring, access control -
       carry so much more weight in OT than "just patch it" does in IT.
 ---
 
@@ -52,7 +52,7 @@ That single fact reshapes every priority you carry.
 
 ## The triad, inverted
 
-IT security is usually taught as **confidentiality, integrity, availability** —
+IT security is usually taught as **confidentiality, integrity, availability** -
 in roughly that order. Ask an IT team what keeps them up at night and you will
 hear about breaches and stolen data.
 
@@ -93,6 +93,6 @@ network that specification never anticipated.
 Every target on this platform is simulated. Nothing you do here touches real
 equipment, and nothing here should ever be pointed at equipment you do not own
 and have written authorisation to test. On a live plant, a misplaced packet is
-not a finding — it is an incident, and possibly a fatality.
+not a finding - it is an incident, and possibly a fatality.
 
 Learn the techniques here. Use them where you are authorised, and nowhere else.

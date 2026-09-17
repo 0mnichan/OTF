@@ -18,7 +18,7 @@ questions:
       Raise the setpoint and the control logic does the work for you: it sees the
       level as 'too low' relative to the new target and drives the pump to catch
       up. You are not fighting the loop, you are commandeering it. This is
-      T0836, Modify Parameter — subtler and more robust than brute-forcing an
+      T0836, Modify Parameter - subtler and more robust than brute-forcing an
       actuator, because the plant's own logic now serves your goal.
   - ref: view-manipulation
     prompt: >-
@@ -49,7 +49,7 @@ questions:
         cost: 8
     explain: >-
       The witness flag is emitted by the PLC logic only when the physical level
-      genuinely crosses 80% — you cannot read it early or guess it. It proves you
+      genuinely crosses 80% - you cannot read it early or guess it. It proves you
       moved the process, not just the number. Each session's witness is unique.
 ---
 
@@ -66,7 +66,7 @@ The elegant move is to stop fighting and start lying to the logic about what it
 wants. **Raise the setpoint.** Write a large value to holding register 10 and the
 PLC's own control logic concludes the tank is far below target and drives the
 pump hard to "recover". The plant floods itself, using its own program, on your
-behalf. In ATT&CK terms this is **T0836, Modify Parameter** — and it is the
+behalf. In ATT&CK terms this is **T0836, Modify Parameter** - and it is the
 canonical example of why setpoints are such high-value writable registers.
 
 ```bash
@@ -80,13 +80,13 @@ PY
 ```
 
 Then watch input register 2 climb, and keep the HMI panel open. Somewhere past
-80% the PLC latches a witness value into holding register 20 — that is this
+80% the PLC latches a witness value into holding register 20 - that is this
 task's flag, and it only appears because the real level really crossed the line.
 
 ## Keeping the operator calm (optional but instructive)
 
 If the HMI reads the displayed level from a register you can also write, you can
-hold the displayed number near 60% while the true level climbs — **T0832,
+hold the displayed number near 60% while the true level climbs - **T0832,
 Manipulation of View**. It is not required to get the witness flag, but doing it
 is the difference between a noisy attack and a quiet one, and it sets up the
 stealth objective in the final task. Work out which register the HMI trusts, and

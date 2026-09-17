@@ -8,7 +8,7 @@ questions:
     points: 10
     placeholder: "0-5"
     explain: >-
-      Level 1 is basic control: PLCs, RTUs and IEDs — the devices that read
+      Level 1 is basic control: PLCs, RTUs and IEDs - the devices that read
       sensors and drive actuators on a scan cycle.
   - ref: historian-level
     prompt: "A process historian collecting plant-wide tag data sits at which level?"
@@ -28,7 +28,7 @@ questions:
     placeholder: "e.g. XYZ"
     explain: >-
       The Industrial DMZ (IDMZ, or just DMZ). No traffic should traverse it
-      directly — a client in the enterprise talks to a broker or replica in the
+      directly - a client in the enterprise talks to a broker or replica in the
       DMZ, and a separate connection carries data onward. Nothing from Level 4
       should ever open a socket straight to Level 2.
   - ref: sis-purpose
@@ -43,7 +43,7 @@ questions:
     points: 15
     explain: >-
       An SIS is deliberately independent of the basic process control system, so
-      that a failure — or a compromise — of normal control does not also disable
+      that a failure - or a compromise - of normal control does not also disable
       the last line of defence. TRITON/TRISIS in 2017 was significant precisely
       because it targeted that last line.
 ---
@@ -105,8 +105,8 @@ One box does not appear on the diagram above, and its absence is deliberate.
 
 A **Safety Instrumented System** is a separate controller with separate sensors,
 separate logic, and often a separate vendor. Its only job is to detect that the
-process has left its safe envelope and to force it to a safe state — vent the
-pressure, trip the breaker, close the fuel valve — regardless of what the normal
+process has left its safe envelope and to force it to a safe state - vent the
+pressure, trip the breaker, close the fuel valve - regardless of what the normal
 control system thinks.
 
 It is independent so that losing the process control system does not also lose

@@ -15,7 +15,7 @@ questions:
     points: 20
     explain: >-
       The EWS is where PLC programs are written and downloaded. Own it and you
-      inherit the engineers' own tools and credentials — you can read the exact
+      inherit the engineers' own tools and credentials - you can read the exact
       logic running in every controller and push new logic using the vendor's
       normal, authenticated, entirely-in-spec process. No protocol exploit
       required. This is T0843, Program Download, and it is how the most serious
@@ -39,7 +39,7 @@ questions:
         cost: 15
     explain: >-
       The historian, now yours, has a route into the plant that your original
-      foothold never did — you have inherited its position. The EWS falls to a
+      foothold never did - you have inherited its position. The EWS falls to a
       remote-support pathway that was opened for a vendor and never closed, the
       single most common real-world initial-access story on plant floors.
   - ref: project-file
@@ -64,7 +64,7 @@ questions:
 You are on the historian. From here the view changes: the historian can reach
 down into the plant in ways your corporate foothold never could, because
 collecting process data is its entire reason to exist. You have not just
-compromised a host — you have inherited its network position.
+compromised a host - you have inherited its network position.
 
 ## Descending to Level 2
 
@@ -75,12 +75,12 @@ workstation**, `ews.plant`, and it is the prize of the entire room.
 Why the EWS and not the PLC directly? Because the EWS is where the PLC's *program*
 lives. It holds the vendor programming software, the project files with every
 tag named and commented, and the credentials to download logic into the
-controllers. Own the EWS and you do not fight the PLC's protocol — you use the
+controllers. Own the EWS and you do not fight the PLC's protocol - you use the
 engineers' own supported workflow to read and rewrite what the PLC does. This is
 **T0843, Program Download**, and it is the mechanism behind the most consequential
 ICS intrusions on record.
 
-The way in is, once again, not an exploit. It is a **remote-support service** —
+The way in is, once again, not an exploit. It is a **remote-support service** -
 opened so a vendor could dial in for commissioning, secured with a default or
 weak credential, and never re-locked once the vendor left. Find it, and the EWS
 is yours.
@@ -90,6 +90,6 @@ is yours.
 Once on the EWS, open the reactor project. You are now reading the plant's
 documentation from the inside: the tag table, the I/O mapping, the comments the
 engineers wrote for each other. The reactor temperature setpoint, the pressure
-interlocks, the alarm thresholds — all named, all mapped to registers, all handed
+interlocks, the alarm thresholds - all named, all mapped to registers, all handed
 to you. The final descent to the PLC, in the next task, is easy precisely because
 you are holding the map.

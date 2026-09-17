@@ -26,6 +26,8 @@ export function WebTerminal({
   const [history, setHistory] = useState<string[]>([]);
   const [histIdx, setHistIdx] = useState(-1);
   const [live, setLive] = useState(false);
+  const [minimized, setMinimized] = useState(false);
+  const [closed, setClosed] = useState(false);
   const bodyRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -42,7 +44,7 @@ export function WebTerminal({
     { text: 'OT Operations Console [Version 1.0]', kind: 'out' },
     { text: '(c) OTF training range. All targets simulated. No internet egress.', kind: 'out' },
     { text: '', kind: 'out' },
-    { text: "Type 'help' for commands. This is a real interpreter — solve it by doing.", kind: 'out' },
+    { text: "Type 'help' for commands. This is a real interpreter - solve it by doing.", kind: 'out' },
     { text: '', kind: 'out' },
   ];
 
@@ -106,26 +108,39 @@ export function WebTerminal({
     }
   }
 
+  // Closed: show a small launcher so it behaves like a re-openable popup.
+  if (closed) {
+    return (
+      <button
+        onClick={() => { setClosed(false); setMinimized(false); }}
+        className="flex items-center gap-2 px-4 py-2 text-[13px] font-bold text-[var(--color-ink)]"
+      >
+        <span className="grid h-4 w-4 place-items-center bg-black text-[#7fff7f]">›_</span>
+        Open console [{scenario}]
+      </button>
+    );
+  }
+
   return (
     <div className="card">
-      <div className="title-bar flex items-center gap-2 px-1.5 py-1">
-        <span className="mono text-[12px]">cmd.exe — control LAN [{scenario}]</span>
-        {live && <span className="mono ml-2 text-[10px] text-[#7fff7f]">● PROCESS LIVE</span>}
+      <div className="title-bar flex items-center gap-2 px-2 py-1.5">
+        <span className="grid h-4 w-4 place-items-center rounded-[2px] bg-black text-[9px] text-[#7fff7f]">›_</span>
+        <span className="mono text-[12px]">cmd.exe - control LAN [{scenario}]</span>
+        {live && <span className="mono ml-2 text-[10px] text-[#a6ff9c]">● PROCESS LIVE</span>}
         <div className="ml-auto flex items-center gap-1">
-          <span className="title-btn">_</span>
-          <span className="title-btn">▢</span>
-          <span className="title-btn">✕</span>
+          <button className="title-btn" title="Minimize" onClick={() => setMinimized((m) => !m)}>_</button>
+          <button className="xp-close" title="Close" onClick={() => setClosed(true)}>✕</button>
         </div>
       </div>
-      {briefing && (
-        <div className="mono border-b-2 border-[var(--w95-shadow)] bg-[var(--w95-face)] px-2 py-1.5 text-[11px] text-black">
+      {!minimized && briefing && (
+        <div className="mono border-b border-[#b8b49f] bg-[var(--xp-face)] px-2.5 py-1.5 text-[11px] text-black">
           {briefing}
         </div>
       )}
       <div
         ref={bodyRef}
         onClick={() => inputRef.current?.focus()}
-        className="mono h-80 overflow-y-auto bg-black px-3 py-2 text-[12.5px] leading-snug"
+        className={`mono overflow-y-auto bg-black px-3 py-2 text-[12.5px] leading-snug ${minimized ? 'hidden' : 'h-96'}`}
         style={{ color: '#c8c8c8' }}
       >
         {lines.map((l, i) => (

@@ -20,7 +20,7 @@ questions:
     explain: >-
       FC 43 (Read Device Identification) is the Modbus equivalent of a service
       banner. Many devices answer it happily to any client, handing you vendor,
-      product and revision — a free and reliable fingerprint.
+      product and revision - a free and reliable fingerprint.
   - ref: level-register
     prompt: >-
       One holding register updates continuously and tracks a value between 0 and
@@ -36,7 +36,7 @@ questions:
     explain: >-
       Register 7 changes every scan as the simulated level rises and falls. A
       value that moves on its own, bounded to a sensible engineering range, is a
-      live process variable — one of the most useful things to identify early.
+      live process variable - one of the most useful things to identify early.
   - ref: reg-flag
     prompt: >-
       Read the block of holding registers past where the HMI polls. Several
@@ -58,8 +58,8 @@ questions:
       Data left in registers the HMI never displays is invisible to the
       operator but perfectly readable to anyone who keeps scanning. Here it is a
       flag; on a real device it might be a firmware string, a serial number, or a
-      hardcoded credential. The lesson — never assume 'the screen only shows X'
-      means 'the device only exposes X' — is why enumeration goes past the
+      hardcoded credential. The lesson - never assume 'the screen only shows X'
+      means 'the device only exposes X' - is why enumeration goes past the
       obvious block. Each player's flag is unique to their session.
 ---
 
@@ -103,7 +103,7 @@ PY
 ```
 
 Registers that change on their own are process variables. Registers that sit
-still are configuration, setpoints — or, sometimes, data somebody forgot was
+still are configuration, setpoints - or, sometimes, data somebody forgot was
 reachable.
 
 ## Read past the edge
@@ -112,7 +112,7 @@ The HMI polls registers 0–15. That is the *displayed* register space, not the
 *exposed* one. Keep reading. Two bytes per register, decode as ASCII, and watch
 for a printable run.
 
-The flag you recover is unique to your session — it will not validate for anyone
+The flag you recover is unique to your session - it will not validate for anyone
 else, and if it turns up on another account we will know exactly whose it was.
 That is not a threat so much as a design demonstration: per-user flags are how a
 CTF platform makes answer-sharing pointless.

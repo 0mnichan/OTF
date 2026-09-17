@@ -1,5 +1,5 @@
 ---
-title: "Stuxnet (2010) — the one that started it all"
+title: "Stuxnet (2010) - the one that started it all"
 questions:
   - ref: target
     prompt: "What did Stuxnet ultimately sabotage?"
@@ -26,7 +26,7 @@ questions:
     explain: >-
       Siemens SIMATIC S7 PLCs, via the STEP 7 engineering software. Stuxnet
       infected engineering workstations and injected malicious blocks during
-      program download — MITRE ATT&CK for ICS T0843.
+      program download - MITRE ATT&CK for ICS T0843.
   - ref: false-view
     prompt: >-
       While sabotaging the centrifuges, what did Stuxnet show the operators and
@@ -35,14 +35,14 @@ questions:
     options:
       - Obvious error messages
       - Recorded "normal" readings replayed to hide the attack (a false view)
-      - Nothing — the HMIs were offline
+      - Nothing - the HMIs were offline
       - A ransom note
     correct: 1
     points: 20
     explain: >-
       Stuxnet recorded normal sensor values and replayed them, so operators and
       protection logic saw a healthy process while the centrifuges were being
-      destroyed — a real-world Manipulation of View (T0832), the same idea behind
+      destroyed - a real-world Manipulation of View (T0832), the same idea behind
       the Clearwater and Bridgehead stealth objectives.
   - ref: airgap
     prompt: >-
@@ -58,12 +58,12 @@ questions:
     explain: >-
       USB drives carried it across the air gap, exploiting LNK and other Windows
       vulnerabilities to spread. "Air-gapped" is a design intent, not a guarantee
-      — removable media and transient laptops routinely bridge gaps.
+      - removable media and transient laptops routinely bridge gaps.
 ---
 
 Every field has a year zero. For OT security it is **2010**, when Stuxnet showed
 the world that code could reach through a network, past an air gap, into a
-programmable controller, and break a physical machine — quietly.
+programmable controller, and break a physical machine - quietly.
 
 Research it as you go; the questions reward the *mechanism*. Start with the
 Natanz centrifuges, the Siemens S7 target, the STEP 7 engineering-software

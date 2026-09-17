@@ -10,7 +10,7 @@ questions:
     case_sensitive: false
     points: 20
     explain: >-
-      Industroyer (a.k.a. CrashOverride) — the first malware framework built
+      Industroyer (a.k.a. CrashOverride) - the first malware framework built
       specifically to manipulate electric grid protocols directly, rather than
       driving the operators' HMIs by hand as in 2015. A generational step up in
       capability.
@@ -27,7 +27,7 @@ questions:
     correct: 1
     points: 25
     explain: >-
-      TRITON targeted Schneider Electric Triconex Safety Instrumented Systems —
+      TRITON targeted Schneider Electric Triconex Safety Instrumented Systems -
       the independent last line of defence that trips a process to a safe state.
       Compromising the SIS means an attacker can disable the protection that
       prevents an explosion or release. It is the most consequential class of OT
@@ -60,8 +60,8 @@ questions:
     explain: >-
       Independence. An SIS is deliberately separate from the basic process
       control system so that losing normal control does not also lose the
-      protection. Erode that independence — shared networks, shared engineering
-      access, key switches left in PROGRAM — and the last line of defence becomes
+      protection. Erode that independence - shared networks, shared engineering
+      access, key switches left in PROGRAM - and the last line of defence becomes
       reachable.
 ---
 
@@ -69,9 +69,9 @@ Between 2015 and 2017 OT attacks matured from "misuse the operator's tools" to
 "purpose-built weapons," and crossed the line that the field fears most: the
 safety system.
 
-Trace the arc. **2015 Ukraine** — hands-on-keyboard breaker operation (you
-recreated it). **2016 Kyiv — Industroyer/CrashOverride** — malware that speaks
-grid protocols itself. **2017 — TRITON/TRISIS** — the first known attack aimed
+Trace the arc. **2015 Ukraine** - hands-on-keyboard breaker operation (you
+recreated it). **2016 Kyiv - Industroyer/CrashOverride** - malware that speaks
+grid protocols itself. **2017 - TRITON/TRISIS** - the first known attack aimed
 squarely at a **Safety Instrumented System**, the independent protection layer
 that exists to prevent disasters. Understand why targeting the SIS is a category
 apart, and why its *independence* is the property that both makes it work and

@@ -16,7 +16,7 @@ questions:
     explain: >-
       It does not. Modbus has no authentication, no authorisation, and no
       encryption. Any host that can reach TCP/502 can read or write any register
-      it likes. This is not a vulnerability to be patched — it is the protocol.
+      it likes. This is not a vulnerability to be patched - it is the protocol.
       Security has to come from the network around it.
   - ref: modbus-port
     prompt: "What TCP port does Modbus/TCP use?"
@@ -64,7 +64,7 @@ have no security at all.** That is not negligence. It is a design that was corre
 for a serial cable in a locked room in 1979 and became catastrophic the moment
 someone bridged it to Ethernet.
 
-## Modbus — the lingua franca
+## Modbus - the lingua franca
 
 Modbus is the oldest and most widespread industrial protocol still in daily use.
 It is beautifully, terrifyingly simple.
@@ -80,20 +80,20 @@ It is beautifully, terrifyingly simple.
 There is nothing to bypass. `write_single_register(unit=1, address=40001,
 value=9999)` is a valid, in-spec request. Whether that register is a cosmetic
 display value or a pump-speed setpoint is not something the protocol knows or
-cares about. Finding out which is the whole game — and the *Modbus 101* and
+cares about. Finding out which is the whole game - and the *Modbus 101* and
 *Clearwater* rooms are where you learn to.
 
 ## Siemens S7comm
 
 The native protocol of Siemens S7 PLCs, riding on ISO-on-TCP at port **102**.
-Richer than Modbus — it can start and stop the CPU, upload and download blocks,
+Richer than Modbus - it can start and stop the CPU, upload and download blocks,
 read and write memory areas. Older variants have no real authentication; newer
 ones added it, with a mixed track record. Stuxnet spoke S7comm to reprogram the
 controllers driving Iran's centrifuges.
 
 ## DNP3 and IEC 60870-5-104
 
-The SCADA telemetry protocols of the utilities world — electricity and water.
+The SCADA telemetry protocols of the utilities world - electricity and water.
 Built for a master station polling hundreds of remote outstations over slow,
 lossy, wide-area links.
 
@@ -110,10 +110,10 @@ Ethernet. **TCP/44818** for explicit request/response messaging, **UDP/2222**
 for the cyclic implicit I/O that streams between devices. Recognising it from
 those ports is half of identifying an Allen-Bradley cell on sight.
 
-## OPC UA — the modern exception
+## OPC UA - the modern exception
 
 The one protocol in this list designed in this century with security in mind.
-OPC UA has authentication, encryption, and signing built in — when they are
+OPC UA has authentication, encryption, and signing built in - when they are
 turned on. In the field they are frequently turned off "to get it working", which
 is its own kind of lesson.
 

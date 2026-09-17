@@ -19,15 +19,15 @@ questions:
       operation directly causing electricity outages.
   - ref: customers
     prompt: >-
-      Approximately how many customers lost power? (thousands — enter the number
+      Approximately how many customers lost power? (thousands - enter the number
       of customers, e.g. 225000)
     kind: numeric
     value: 225000
     tolerance: 25000
     points: 10
     explain: >-
-      About 225,000. The outage lasted one to six hours; the deeper damage —
-      wiped workstations and bricked serial-to-Ethernet converters — took far
+      About 225,000. The outage lasted one to six hours; the deeper damage -
+      wiped workstations and bricked serial-to-Ethernet converters - took far
       longer to recover from.
   - ref: initial-access
     prompt: >-
@@ -43,8 +43,8 @@ questions:
     points: 15
     explain: >-
       Spear-phishing with weaponised Office documents delivered BlackEnergy 3.
-      From that IT foothold the attackers spent months harvesting credentials —
-      including VPN credentials into the OT network — and learning the SCADA
+      From that IT foothold the attackers spent months harvesting credentials -
+      including VPN credentials into the OT network - and learning the SCADA
       environment.
   - ref: how-breakers
     prompt: >-
@@ -59,7 +59,7 @@ questions:
     points: 20
     explain: >-
       This is the detail that matters. The 2015 attackers did not need bespoke
-      ICS malware to trip breakers — they used the operators' own remote-access
+      ICS malware to trip breakers - they used the operators' own remote-access
       and HMI software with stolen credentials and opened breakers by hand,
       clicking through the legitimate interface. The malware (KillDisk, the
       converter firmware attack, the telephone-DoS) was about blinding and
@@ -77,13 +77,13 @@ questions:
     points: 15
     explain: >-
       Crews drove to substations and operated them manually. That manual
-      fallback — a "weakness" of a less-automated grid — became the resilience
+      fallback - a "weakness" of a less-automated grid - became the resilience
       that got the lights back on. It is a defensive lesson you will use in the
       companion defence room.
 ---
 
 Before you reproduce it, understand it. This room recreates the *mechanism* of
-the December 23, 2015 attack on Ukraine's power distribution grid — the first
+the December 23, 2015 attack on Ukraine's power distribution grid - the first
 cyber operation confirmed to have switched off the lights.
 
 > This is a **fictional recreation** for training. The RTU, addresses and flag
@@ -94,19 +94,19 @@ cyber operation confirmed to have switched off the lights.
 The attack was patient and unglamorous, which is exactly why it is worth
 studying:
 
-1. **Months earlier — spear-phishing.** Weaponised Office documents delivered
+1. **Months earlier - spear-phishing.** Weaponised Office documents delivered
    **BlackEnergy 3** to corporate IT at three regional distribution companies.
 2. **Credential theft and reconnaissance.** From IT, the attackers harvested
-   credentials — crucially, **VPN credentials into the OT network** — and mapped
+   credentials - crucially, **VPN credentials into the OT network** - and mapped
    the SCADA environment. There was no rush.
 3. **The strike.** Using stolen operator access, they **remotely operated the
    real HMIs** and opened breakers **by hand** across dozens of substations.
-   No exotic PLC exploit — the operators' own tools, turned against them.
+   No exotic PLC exploit - the operators' own tools, turned against them.
 4. **Blinding and delaying.** **KillDisk** wiped workstations and servers;
    malicious firmware **bricked serial-to-Ethernet converters** so operators
    lost remote visibility and control; a **telephone denial-of-service** flooded
    call centres so customers could not report outages.
-5. **Recovery — by hand.** Field crews physically drove to substations and
+5. **Recovery - by hand.** Field crews physically drove to substations and
    switched them back to **manual local control**.
 
 ## The uncomfortable takeaway
@@ -114,5 +114,5 @@ studying:
 The decisive capability was not malware. It was **legitimate remote access plus
 stolen credentials plus a flat-enough network to reach the control systems**.
 That is why this recreation puts you on a seat whose credentials were reused
-from the corporate VPN — because that is where the real attack's power came
+from the corporate VPN - because that is where the real attack's power came
 from, and it is what the defence room will teach you to take away.

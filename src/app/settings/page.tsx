@@ -1,7 +1,7 @@
 import { requireUser } from '@/lib/session';
 import { Icon } from '@/components/icons';
 
-export const metadata = { title: 'Settings — OTF' };
+export const metadata = { title: 'Settings - OTF' };
 
 export default async function SettingsPage({
   searchParams,
