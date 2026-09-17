@@ -1,0 +1,20 @@
+slug: shamoon-wiper
+title: "Shamoon and RasGas: The Wiper"
+summary: >-
+  In August 2012 a wiper called Shamoon destroyed the data on tens of thousands
+  of Saudi Aramco workstations and struck RasGas days later. No centrifuge, no
+  breaker, just erasure at scale, and a hard lesson in how an IT-side wiper
+  becomes an energy-sector crisis. Research the incident, the malware, and the
+  recovery.
+difficulty: medium
+purdue_levels: [3, 4]
+protocols: []
+attack_ics: [T0809, T0826, T0828]
+tags: [famous-incident, shamoon, disttrack, wiper, oil-and-gas, incident-response, no-lab]
+est_minutes: 50
+author: OTF
+free: true
+published: true
+order: 74
+banner: "A data-destruction attack on the energy sector. Availability is a safety property in OT."
+prereqs: [hall-of-infamy]

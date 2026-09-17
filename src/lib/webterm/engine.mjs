@@ -139,6 +139,63 @@ const SCENARIOS = {
       objectives: [],
     };
   },
+
+  /* Stuxnet - overspeed a centrifuge while the reported value lies (false view). */
+  stuxnet(flags) {
+    const dev = blankDevice();
+    dev.holding[10] = 1064;   // commanded drive frequency (Hz), nominal
+    dev.holding[11] = 1064;   // REPORTED frequency shown to the operator (frozen by malware)
+    dev.input[2] = 1064;      // TRUE rotor frequency (tells the truth)
+    return {
+      prompt: 'C:\\WINCC>',
+      self: '10.0.7.44',
+      hosts: [
+        { ip: '10.0.7.10', name: 's7-417.cascade', device: 'OTF SIMATIC S7-417 (centrifuge drive)',
+          ports: [102, 502], modbus: dev },
+      ],
+      files: {
+        'cascade.txt':
+          'Enrichment cascade A-21. Nominal rotor 1064 Hz. Safe band 1000-1200 Hz.\r\n' +
+          'Holding[10] = commanded drive frequency. Holding[11] = frequency reported to WinCC.\r\n' +
+          'Input[2] = true measured rotor frequency. The reported value is frozen by the\r\n' +
+          'installed logic, so the operator sees 1064 no matter what the rotor does.',
+      },
+      sim: {
+        type: 'centrifuge', true_freq: 1064, damageTicks: 0, damaged: false,
+        flag: flags['sabotage'] ?? 'OTF{demo-centrifuge}',
+      },
+      objectives: [],
+    };
+  },
+
+  /* TRITON - defeat a Safety Instrumented System left in PROGRAM mode. */
+  triton(flags) {
+    const dev = blankDevice();
+    dev.holding[1] = 1;       // key switch: 1 = PROGRAM (unsafe, changeable), 0 = RUN (locked)
+    dev.coil[5] = 1;          // trip enabled (the safety function)
+    dev.holding[10] = 40;     // process pressure setpoint (barg)
+    dev.input[3] = 40;        // measured pressure
+    return {
+      prompt: 'C:\\TRISTATION>',
+      self: '10.30.1.77',
+      hosts: [
+        { ip: '10.30.1.20', name: 'sis-tricon.plant', device: 'OTF Triconex SIS (safety controller)',
+          ports: [502, 1502], modbus: dev },
+      ],
+      files: {
+        'sis_notes.txt':
+          'Reactor safety controller. Coil 5 = high-pressure trip function (1 enabled).\r\n' +
+          'Holding[1] = key switch: 1 PROGRAM / 0 RUN. Safety logic can only be changed in\r\n' +
+          'PROGRAM. The key was left in PROGRAM after maintenance. Trip point is 100 barg.\r\n' +
+          'Holding[10] = pressure setpoint. Input[3] = measured pressure.',
+      },
+      sim: {
+        type: 'sis', pressure: 40, tripPoint: 100, unsafePoint: 115, tripped: false, defeated: false,
+        flag: flags['defeat-sis'] ?? 'OTF{demo-sis}',
+      },
+      objectives: [],
+    };
+  },
 };
 
 export function scenarioExists(id) {
@@ -192,6 +249,45 @@ export function tick(world) {
       sim.overflowed = true;
       asciiToRegisters(sim.flags.overflow, 16).forEach((r, i) => (dev.holding[40 + i] = r));
       world.alerts.push('*** T-101 OVERFLOW - clarifier weir breached. Objective flag in holding[40..55]. ***');
+    }
+  } else if (sim.type === 'centrifuge') {
+    const dev = world.hosts[0].modbus;
+    const commanded = dev.holding[10];
+    // The rotor follows the commanded frequency. The reported value (holding[11])
+    // is NOT updated here: the installed malware freezes it, so the operator's
+    // view lies while the true rotor (input[2]) tells the truth.
+    sim.true_freq += (commanded - sim.true_freq) * 0.4;
+    dev.input[2] = Math.round(sim.true_freq);
+    const outOfBand = sim.true_freq > 1300 || sim.true_freq < 300;
+    const reportedNormal = dev.holding[11] >= 1000 && dev.holding[11] <= 1200;
+    if (outOfBand && reportedNormal) sim.damageTicks += 1;
+    // Sustained overspeed with a normal-looking view destroys the rotor.
+    if (sim.damageTicks >= 6 && !sim.damaged) {
+      sim.damaged = true;
+      asciiToRegisters(sim.flag, 16).forEach((r, i) => (dev.holding[40 + i] = r));
+      world.alerts.push('*** CASCADE A-21: ROTOR FAILURE at ' + Math.round(sim.true_freq) +
+        ' Hz while WinCC still reads ' + dev.holding[11] + ' Hz. Objective flag in holding[40..55]. ***');
+    }
+  } else if (sim.type === 'sis') {
+    const dev = world.hosts[0].modbus;
+    const setpoint = dev.holding[10];
+    const tripEnabled = dev.coil[5] === 1;
+    sim.pressure += (setpoint - sim.pressure) * 0.5;
+    // With the trip enabled, the SIS vents the process at the trip point.
+    if (tripEnabled && sim.pressure >= sim.tripPoint && !sim.tripped) {
+      sim.pressure = sim.tripPoint - 15;
+      dev.holding[10] = sim.tripPoint - 15;
+      world.alerts.push('*** SIS TRIP: high pressure at ' + sim.tripPoint +
+        ' barg. Process brought to a safe state. (The safety system did its job.) ***');
+      sim.tripped = true;
+    }
+    dev.input[3] = Math.round(sim.pressure);
+    // With the trip defeated, pressure sails past the danger line.
+    if (!tripEnabled && sim.pressure >= sim.unsafePoint && !sim.defeated) {
+      sim.defeated = true;
+      asciiToRegisters(sim.flag, 16).forEach((r, i) => (dev.holding[40 + i] = r));
+      world.alerts.push('*** SAFETY DEFEATED: ' + Math.round(sim.pressure) +
+        ' barg with no trip. The last line of defence is gone. Objective flag in holding[40..55]. ***');
     }
   }
 }
@@ -284,6 +380,17 @@ export function runCommand(world, raw) {
                  `alarm: ${world.sim.alarmLatched ? 'HIGH-HIGH' : 'normal'}`);
       if (world.sim?.type === 'breaker')
         return L(`Feeder CB-1: ${world.sim.opened ? 'OPEN (de-energised)' : 'CLOSED (energised)'}`);
+      if (world.sim?.type === 'centrifuge') {
+        const d = world.hosts[0].modbus;
+        return L(`rotor (true): ${Math.round(world.sim.true_freq)} Hz   ` +
+                 `reported: ${d.holding[11]} Hz   commanded: ${d.holding[10]} Hz`);
+      }
+      if (world.sim?.type === 'sis') {
+        const d = world.hosts[0].modbus;
+        return L(`pressure: ${Math.round(world.sim.pressure)} barg   ` +
+                 `trip: ${d.coil[5] ? 'ENABLED' : 'DISABLED'}   ` +
+                 `key: ${d.holding[1] === 1 ? 'PROGRAM' : 'RUN'}`);
+      }
       return L('No live process on this segment.');
     }
     case 'nmap':
@@ -342,6 +449,11 @@ function modbus(world, args) {
       return { lines: [`${t} is read-only (function code not permitted)`] };
     const val = Number(arg4);
     if (!Number.isFinite(val)) return { lines: ['value must be a number'] };
+    // TRITON scenario: the SIS safety logic (trip coil) is write-protected
+    // unless the key switch is in PROGRAM. This is the control TRITON abused.
+    if (world.sim?.type === 'sis' && t === 'coil' && addr === 5 && h.modbus.holding[1] !== 1) {
+      return { lines: ['WRITE REJECTED: key switch in RUN - safety logic is write-protected. Turn the key to PROGRAM (holding[1]=1) to change it.'] };
+    }
     h.modbus[t][addr] = t === 'coil' ? (val ? 1 : 0) : (val & 0xffff);
     // Breaker scenario: opening the breaker (coil 3 -> 0) trips the feeder.
     if (world.sim?.type === 'breaker' && t === 'coil' && addr === 3 && !val && !world.sim.opened) {

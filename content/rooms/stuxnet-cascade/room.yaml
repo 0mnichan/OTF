@@ -1,0 +1,28 @@
+slug: stuxnet-cascade
+title: "Stuxnet: Cascade Sabotage"
+summary: >-
+  The attack that proved code can break steel. Research how Stuxnet crossed an
+  air gap, reprogrammed Siemens S7 controllers, and destroyed enrichment
+  centrifuges while replaying recorded normal readings to the operators. Then
+  reproduce its signature move: overspeed a rotor in the console while the HMI
+  keeps showing a perfectly healthy 1064 Hz.
+difficulty: hard
+purdue_levels: [0, 1, 2]
+protocols: [s7comm, modbus]
+attack_ics: [T0843, T0831, T0832, T0836]
+tags: [famous-incident, stuxnet, s7, manipulation-of-view, recreate, web-console]
+est_minutes: 70
+author: OTF
+free: true
+published: true
+order: 72
+banner: "Fictional recreation of the Natanz sabotage. The S7 controller is simulated. The idea is exact."
+prereqs: [modbus-101]
+web_lab:
+  scenario: stuxnet
+  briefing: >-
+    You have code execution on a WinCC engineering seat (10.0.7.44) that
+    programs the cascade drive controller s7-417.cascade (10.0.7.10). Read
+    cascade.txt. Holding[10] is the commanded frequency, holding[11] is what the
+    operator sees, input[2] is the true rotor. Overspeed the rotor while the view
+    stays normal. Type 'help'.

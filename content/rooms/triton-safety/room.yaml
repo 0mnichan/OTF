@@ -1,0 +1,27 @@
+slug: triton-safety
+title: "TRITON: Safety Under Siege"
+summary: >-
+  In 2017 attackers reached the one system that is supposed to be untouchable:
+  the Safety Instrumented System that trips a plant to a safe state before it
+  explodes. Research TRITON/TRISIS, then reproduce its enabling condition, defeat
+  a simulated SIS whose key switch was left in PROGRAM, and watch the last line
+  of defence disappear.
+difficulty: hard
+purdue_levels: [1, 2]
+protocols: [modbus]
+attack_ics: [T0880, T0858, T0836, T0800]
+tags: [famous-incident, triton, trisis, safety-system, recreate, web-console]
+est_minutes: 70
+author: OTF
+free: true
+published: true
+order: 73
+banner: "Fictional recreation. The SIS is simulated. Attacking a real safety system can kill people."
+prereqs: [modbus-101]
+web_lab:
+  scenario: triton
+  briefing: >-
+    You reached the safety controller sis-tricon.plant (10.30.1.20) from an
+    engineering seat. Read sis_notes.txt. Coil 5 is the high-pressure trip;
+    holding[1] is the key switch (1 PROGRAM / 0 RUN); holding[10] is the pressure
+    setpoint. The safety logic can only be changed in PROGRAM. Type 'help'.

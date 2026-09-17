@@ -17,5 +17,8 @@ icon: flame
 order: 30
 rooms:
   - hall-of-infamy
+  - stuxnet-cascade
   - blackout-2015-recreate
   - blackout-2015-defend
+  - triton-safety
+  - shamoon-wiper

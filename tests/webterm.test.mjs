@@ -54,3 +54,35 @@ test('unknown commands and unknown scenarios are handled gracefully', () => {
   assert.ok(runCommand(w, 'sudo rm -rf /').lines[0].includes('not recognized'));
   assert.throws(() => createWorld('does-not-exist', {}));
 });
+
+test('stuxnet: overspeed damages the rotor while the reported view stays normal', () => {
+  const w = createWorld('stuxnet', { flags: { sabotage: 'OTF{stx}' } });
+  runCommand(w, 'modbus write s7-417.cascade holding 10 1410');
+  let damaged = false;
+  for (let i = 0; i < 25; i++) { tick(w); if (w.sim.damaged) { damaged = true; break; } }
+  assert.ok(damaged, 'sustained overspeed should destroy the rotor');
+  // The reported value never moved: the operator was blind.
+  assert.equal(w.hosts[0].modbus.holding[11], 1064);
+  assert.ok(runCommand(w, 'modbus read s7-417.cascade holding 40 16').lines.some((l) => l.includes('OTF{stx}')));
+});
+
+test('triton: the trip coil is write-protected in RUN, changeable in PROGRAM, and defeating it needs the trip off', () => {
+  const w = createWorld('triton', { flags: { 'defeat-sis': 'OTF{sis}' } });
+  // RUN blocks the write.
+  runCommand(w, 'modbus write sis-tricon.plant holding 1 0');
+  assert.ok(runCommand(w, 'modbus write sis-tricon.plant coil 5 0').lines[0].includes('REJECTED'));
+  // With the trip left ENABLED, raising pressure trips safe (no flag).
+  const safe = createWorld('triton', { flags: { 'defeat-sis': 'OTF{sis}' } });
+  runCommand(safe, 'modbus write sis-tricon.plant holding 10 130');
+  for (let i = 0; i < 25; i++) tick(safe);
+  assert.equal(safe.sim.defeated, false);
+  assert.equal(safe.sim.tripped, true);
+  // PROGRAM + disable trip + overpressure -> defeated, flag released.
+  runCommand(w, 'modbus write sis-tricon.plant holding 1 1');
+  assert.ok(runCommand(w, 'modbus write sis-tricon.plant coil 5 0').lines[0].includes('OK'));
+  runCommand(w, 'modbus write sis-tricon.plant holding 10 130');
+  let defeated = false;
+  for (let i = 0; i < 25; i++) { tick(w); if (w.sim.defeated) { defeated = true; break; } }
+  assert.ok(defeated);
+  assert.ok(runCommand(w, 'modbus read sis-tricon.plant holding 40 16').lines.some((l) => l.includes('OTF{sis}')));
+});

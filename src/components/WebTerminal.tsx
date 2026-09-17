@@ -60,16 +60,19 @@ export function WebTerminal({
     setLines((ls) => [...ls, ...alerts]);
   }, []);
 
-  // Live process tick (tank / breaker scenarios advance over time).
+  // Sim types whose process evolves over time and needs a clock.
+  const LIVE_TYPES = ['tank', 'centrifuge', 'sis'];
+
   useEffect(() => {
     const w = worldRef.current;
-    if (!w?.sim || (w.sim.type !== 'tank')) return;
+    if (!w?.sim || !LIVE_TYPES.includes(w.sim.type)) return;
     if (!live) return;
     const t = setInterval(() => {
       tick(w);
       drainAlerts();
     }, 1000);
     return () => clearInterval(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [live, drainAlerts]);
 
   useEffect(() => {
@@ -90,7 +93,7 @@ export function WebTerminal({
     const res = runCommand(w, cmdText);
     if (res.clear) { setLines(banner); return; }
     // Any write that could start the process turns the live tick on.
-    if (w.sim?.type === 'tank') setLive(true);
+    if (w.sim && LIVE_TYPES.includes(w.sim.type)) setLive(true);
     drainAlerts();
     setLines((ls) => [...ls, promptLine, ...res.lines.map((text: string) => ({ text, kind: 'out' as const }))]);
   }
