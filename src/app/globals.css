@@ -1,43 +1,39 @@
 @import "tailwindcss";
 
 /*
- * OTF visual language: Windows XP "Luna" era operator station.
+ * OTF visual language: a Windows XP application.
  *
- * Tan window chassis (#ECE9D8), glossy blue Luna title bars with rounded tops,
- * a red close button, XP form buttons and sunken white fields, Tahoma type, and
- * a soft P&ID sheet behind it all.
+ * Not a card dashboard. An Explorer-style window: title bar, menu/toolbar, a
+ * blue task pane on the left, list views, group boxes, and a status bar. Square
+ * corners everywhere. XP Luna blue, tan (#ECE9D8) chassis, Tahoma type.
  */
 @theme {
-  /* XP chassis */
   --xp-face: #ece9d8;
-  --xp-face-hi: #faf9f4;
-  --xp-face-lo: #d6d2bf;
-  --xp-frame: #0a2e8c;
-  --xp-btn-border: #7f9db9;
+  --xp-face-hi: #ffffff;
+  --xp-face-lo: #d4d0c8;
+  --xp-frame: #0831d9;
+  --xp-btn-border: #003c74;
+  --xp-line: #919b9c;
 
-  /* Existing utilities remap onto the XP chassis */
-  --color-desktop: #6f96c4;
+  --color-desktop: #5a7edc;
   --color-panel: #ece9d8;
   --color-panel-raised: #ece9d8;
   --color-panel-sunken: #ffffff;
-  --color-panel-border: #aca899;
+  --color-panel-border: #919b9c;
   --color-field: #ffffff;
 
-  /* Luna blues */
-  --color-navy: #0831d9;
+  --color-navy: #0a246a;
   --color-navy-light: #3f8cf3;
-  --color-navy-deep: #0a2e8c;
+  --color-navy-deep: #061a4a;
 
-  /* Ink */
-  --color-ink: #10233b;
-  --color-ink-dim: #2a2a2a;
+  --color-ink: #0a1a2f;
+  --color-ink-dim: #333333;
   --color-ink-faint: #5a5a52;
 
-  /* Signal colours */
   --color-hazard: #9a4d00;
   --color-hazard-dim: #7a3d00;
   --color-alarm: #ffb000;
-  --color-process: #158000;
+  --color-process: #157a0e;
   --color-trip: #cc0000;
   --color-info: #0b3fc9;
   --color-conduit: #0b3fc9;
@@ -45,92 +41,106 @@
   --font-mono: "Lucida Console", "Consolas", ui-monospace, "Courier New", monospace;
   --font-ui: "Tahoma", "Segoe UI", "MS Sans Serif", Geneva, Verdana, sans-serif;
 
-  /* Back-compat aliases so components referencing the old chassis still work. */
+  /* back-compat aliases */
   --w95-face: #ece9d8;
   --w95-hilite: #ffffff;
   --w95-light: #f3f1e7;
   --w95-shadow: #aca899;
-  --w95-dark: #7f7f7f;
+  --w95-dark: #808080;
 }
 
 :root { color-scheme: light; }
-
 html { background: var(--color-desktop); color: var(--color-ink); }
 
 body {
   min-height: 100vh;
   font-family: var(--font-ui);
-  font-size: 13px;
-  /* XP desktop: a soft blue field with a faint P&ID dot grid. */
-  background-color: #6f96c4;
-  background-image:
-    radial-gradient(circle, rgba(255, 255, 255, 0.10) 1px, transparent 1.4px),
-    linear-gradient(180deg, #7ea6d6 0%, #5f83b4 60%, #4f6f9c 100%);
-  background-size: 15px 15px, 100% 100%;
-  background-attachment: fixed;
+  font-size: 12px;
+  background: #5a7edc;
 }
 
 .scanlines::before { content: none; }
 a { color: inherit; text-decoration: none; }
-::selection { background: #2b6fe0; color: #fff; }
+::selection { background: #316ac5; color: #fff; }
+
+/* Square everything. XP has no rounded edges in this design. */
+*, *::before, *::after { border-radius: 0 !important; }
 
 /* -------------------------------------------------------------------------- */
-/* XP windows and panels                                                      */
+/* Windows, group boxes, panels                                               */
 /* -------------------------------------------------------------------------- */
 
-.card {
+/*
+ * `.card` is kept for back-compat but is no longer a floating rounded card:
+ * it is a flat XP group panel (etched border, tan face, no shadow).
+ */
+.card,
+.group-box {
   background: var(--xp-face);
-  border: 1px solid var(--xp-frame);
-  border-radius: 8px 8px 3px 3px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
-  overflow: hidden;
-}
-
-/* A sunken white group-box / well. */
-.bevel-in {
-  background: #fff;
   border: 1px solid;
-  border-color: #7f7f7f #ffffff #ffffff #7f7f7f;
-  border-radius: 2px;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  box-shadow: 1px 1px 0 #d4d0c8 inset, -1px -1px 0 #d4d0c8 inset;
 }
 
-/* XP form button. */
-.bevel-out,
-button {
-  background: linear-gradient(180deg, #fdfefe 0%, #f2f1ea 45%, #e9e7db 100%);
+/* A titled group box: use with .gb-title for the legend row. */
+.gb-title {
+  font-weight: 700;
+  color: #0a246a;
+  padding: 2px 6px;
+  border-bottom: 1px solid var(--xp-line);
+  background: linear-gradient(180deg, #fbfbf9, #ece9d8);
+}
+
+/* The blue Explorer task pane. */
+.xp-taskpane {
+  background: linear-gradient(180deg, #f0f4fd 0%, #d7e2f6 40%, #c5d4ef 100%);
+  border: 1px solid #7ba0d9;
+}
+.xp-taskgroup { margin: 8px; border: 1px solid #b6c8e8; background: rgba(255,255,255,0.55); }
+.xp-taskgroup > .hd {
+  display: flex; align-items: center; gap: 6px;
+  padding: 4px 8px; font-weight: 700; color: #16407a;
+  background: linear-gradient(180deg, #ffffff, #d6e4f6);
+  border-bottom: 1px solid #b6c8e8;
+  cursor: default;
+}
+.xp-taskgroup > .bd { padding: 6px 10px; }
+.xp-tasklink { display: flex; align-items: center; gap: 6px; padding: 2px 0; color: #0b3fc9; }
+.xp-tasklink:hover { text-decoration: underline; color: #2b6fe0; }
+
+/* -------------------------------------------------------------------------- */
+/* Buttons and fields (square XP)                                             */
+/* -------------------------------------------------------------------------- */
+
+.bevel-out, button, .xp-btn {
+  background: linear-gradient(180deg, #ffffff 0%, #f0f0ea 48%, #e2e0d6 52%, #eceae0 100%);
   border: 1px solid var(--xp-btn-border);
-  border-radius: 3px;
   color: var(--color-ink);
-  box-shadow: inset 0 0 0 1px #ffffff;
-  transition: box-shadow 0.1s, border-color 0.1s;
+  padding: 3px 12px;
+  transition: box-shadow 0.08s, border-color 0.08s;
 }
-.bevel-out:hover,
-button:hover {
-  border-color: #2b6fe0;
-  box-shadow: inset 0 0 0 1px #ffffff, 0 0 4px rgba(43, 111, 224, 0.6);
+.bevel-out:hover, button:hover, .xp-btn:hover {
+  box-shadow: 0 0 0 1px #fee9a0 inset, 0 0 3px rgba(255,187,0,0.5);
+  border-color: #e5a000;
 }
-.bevel-out:active,
-button:active:not(.title-btn):not(.xp-close) {
-  background: linear-gradient(180deg, #e2e0d6 0%, #eceadf 100%);
-  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.25);
+.bevel-out:active, button:active:not(.title-btn):not(.xp-close) {
+  background: linear-gradient(180deg, #dcd9cd, #e9e7dc);
+  box-shadow: 1px 1px 2px rgba(0,0,0,0.2) inset;
 }
 button:focus-visible { outline: 1px dotted #1b1b1b; outline-offset: -4px; }
 
-/* Sunken white fields. */
 input:not([type="radio"]):not([type="checkbox"]),
-textarea,
-select {
+textarea, select {
   background: #fff !important;
   color: #000;
-  border: 1px solid #7f9db9 !important;
-  border-top-color: #3c5a7a !important;
-  border-radius: 2px;
-  box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.12);
+  border: 1px solid !important;
+  border-color: #7f9db9 #d4d0c8 #d4d0c8 #7f9db9 !important;
+  box-shadow: 1px 1px 1px rgba(0,0,0,0.12) inset;
+  padding: 3px 5px;
 }
 input:focus, textarea:focus, select:focus {
   outline: none;
   border-color: #2b6fe0 !important;
-  box-shadow: inset 0 0 0 1px #7db2ff;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -138,115 +148,89 @@ input:focus, textarea:focus, select:focus {
 /* -------------------------------------------------------------------------- */
 
 .title-bar {
-  background:
-    linear-gradient(180deg, #3f8cf3 0%, #2b72f0 9%, #1c62ec 45%, #1150da 90%, #0d47c9 100%);
+  background: linear-gradient(180deg, #0997ff 0%, #0053ee 8%, #2f8eff 40%, #0250e9 88%, #0641c8 100%);
   color: #fff;
   font-weight: 700;
-  letter-spacing: 0.01em;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.45);
-  border-radius: 7px 7px 0 0;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
 }
-
-/* XP title-bar buttons: a small glossy square. Only minimize + close are used. */
 .title-btn, .xp-close {
-  display: inline-grid;
-  place-items: center;
-  width: 21px;
-  height: 20px;
-  border-radius: 3px;
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  color: #fff;
-  font-family: var(--font-ui);
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 1;
-  background: linear-gradient(180deg, #6aa8ff 0%, #2f74e6 50%, #205fd6 100%);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  display: inline-grid; place-items: center;
+  width: 22px; height: 20px;
+  border: 1px solid #ffffff;
+  color: #fff; font-weight: 700; font-size: 12px; line-height: 1;
+  background: linear-gradient(180deg, #4c9bff 0%, #1e63d8 60%, #1657cf 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
   cursor: pointer;
 }
-.title-btn:hover { background: linear-gradient(180deg, #8dbcff 0%, #3f84ee 100%); }
-.xp-close {
-  background: linear-gradient(180deg, #f79b86 0%, #e0533a 45%, #cf3f27 100%);
-}
-.xp-close:hover { background: linear-gradient(180deg, #ffb39f 0%, #ea5f45 100%); }
+.title-btn:hover { background: linear-gradient(180deg, #6fb0ff, #2f74e6); }
+.xp-close { background: linear-gradient(180deg, #f08a72 0%, #d64a2f 55%, #c23a20 100%); }
+.xp-close:hover { background: linear-gradient(180deg, #ff9d84, #e05a3f); }
 
-/* The amber caution/alarm strip. */
+/* -------------------------------------------------------------------------- */
+/* List view (Explorer "details" list)                                        */
+/* -------------------------------------------------------------------------- */
+
+.xp-list { background: #fff; border: 1px solid; border-color: #7f9db9 #d4d0c8 #d4d0c8 #7f9db9; }
+.xp-list-head {
+  display: flex; align-items: center;
+  background: linear-gradient(180deg, #ffffff, #ece9d8);
+  border-bottom: 1px solid var(--xp-line);
+  font-weight: 700; color: #333;
+}
+.xp-list-head > * { padding: 3px 8px; border-right: 1px solid #d4d0c8; }
+.xp-row { display: flex; align-items: center; border-bottom: 1px solid #ededed; cursor: pointer; }
+.xp-row > * { padding: 4px 8px; }
+.xp-row:hover { background: #e8f0fe; }
+.xp-row.sel { background: #316ac5; color: #fff; }
+
 .hmi-alarm {
   background: linear-gradient(180deg, #ffc94a, var(--color-alarm));
   color: #3a2900;
   box-shadow: inset 0 1px 0 #ffe08a, inset 0 -1px 0 #c98a12;
 }
-
-.group-box { background: var(--xp-face); border: 1px solid #b8b49f; border-radius: 3px; }
 .tag-plate { background: var(--color-trip); color: #fff; font-family: var(--font-mono); }
-.led { display: inline-block; width: 8px; height: 8px; border-radius: 50%; box-shadow: 0 0 3px currentColor; }
+.led { display: inline-block; width: 7px; height: 7px; box-shadow: 0 0 2px currentColor; }
 
 /* -------------------------------------------------------------------------- */
 /* Prose (rendered Markdown)                                                  */
 /* -------------------------------------------------------------------------- */
 
-.prose { line-height: 1.65; color: #10233b; }
+.prose { line-height: 1.6; color: #0a1a2f; }
 .prose h2 {
-  font-size: 1.15rem;
-  font-weight: 700;
-  margin: 1.8rem 0 0.7rem;
-  color: #fff;
-  background: linear-gradient(180deg, #3f8cf3, #1150da);
-  padding: 0.3rem 0.7rem;
-  border-radius: 4px;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+  font-size: 1.1rem; font-weight: 700; margin: 1.6rem 0 0.6rem; color: #fff;
+  background: linear-gradient(180deg, #3f8cf3, #0250e9);
+  padding: 0.28rem 0.6rem; text-shadow: 1px 1px 1px rgba(0,0,0,0.4);
 }
 .prose h3 {
-  font-size: 1rem;
-  font-weight: 700;
-  margin: 1.4rem 0 0.5rem;
-  color: #0b3fc9;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-  border-bottom: 1px solid #b8c6dd;
-  padding-bottom: 0.25rem;
+  font-size: 0.98rem; font-weight: 700; margin: 1.3rem 0 0.5rem; color: #0a246a;
+  text-transform: uppercase; letter-spacing: 0.02em;
+  border-bottom: 1px solid #b8c6dd; padding-bottom: 0.2rem;
 }
-.prose p { margin: 0.75rem 0; color: #1a2432; }
-.prose ul, .prose ol { margin: 0.75rem 0; padding-left: 1.5rem; }
-.prose li { margin: 0.3rem 0; }
-.prose li::marker { color: #0b3fc9; }
+.prose p { margin: 0.7rem 0; color: #1a2432; }
+.prose ul, .prose ol { margin: 0.7rem 0; padding-left: 1.5rem; }
+.prose li { margin: 0.28rem 0; }
+.prose li::marker { color: #0a246a; }
 .prose strong { color: #000; font-weight: 700; }
 .prose a { color: #0b3fc9; text-decoration: underline; }
 .prose code {
-  font-family: var(--font-mono);
-  font-size: 0.9em;
-  background: #fff;
-  border: 1px solid #c9c4b0;
-  border-radius: 2px;
-  padding: 0 0.25rem;
-  color: #9a4d00;
+  font-family: var(--font-mono); font-size: 0.9em; background: #fff;
+  border: 1px solid #c9c4b0; padding: 0 0.25rem; color: #9a4d00;
 }
 .prose pre {
-  background: #002b6b;                 /* XP-blue readout panel */
-  color: #d7e2f2;
-  padding: 0.85rem 1rem;
-  overflow-x: auto;
-  margin: 1rem 0;
-  font-family: var(--font-mono);
-  font-size: 0.82rem;
-  line-height: 1.45;
-  border: 1px solid #001b45;
-  border-radius: 3px;
-  box-shadow: inset 0 1px 6px rgba(0, 0, 0, 0.5);
+  background: #001b45; color: #d7e2f2; padding: 0.8rem 1rem; overflow-x: auto;
+  margin: 0.9rem 0; font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.45;
+  border: 1px solid #808080; box-shadow: 1px 1px 2px rgba(0,0,0,0.4) inset;
 }
 .prose pre code { background: none; border: none; padding: 0; color: #cdeacf; }
-.prose table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
-.prose th, .prose td { border: 1px solid #b8b49f; padding: 0.4rem 0.7rem; text-align: left; }
-.prose th { background: linear-gradient(180deg, #3f8cf3, #1150da); color: #fff; font-weight: 700; }
+.prose table { width: 100%; border-collapse: collapse; margin: 0.9rem 0; font-size: 0.85rem; }
+.prose th, .prose td { border: 1px solid #b8b49f; padding: 0.35rem 0.6rem; text-align: left; }
+.prose th { background: linear-gradient(180deg, #3f8cf3, #0250e9); color: #fff; font-weight: 700; }
 .prose td { color: #1a2432; background: #fff; }
 .prose tr:nth-child(even) td { background: #f3f1e7; }
 .prose blockquote {
-  border-left: 4px solid var(--color-alarm);
-  background: #fff8e6;
-  padding: 0.5rem 0.8rem;
-  margin: 1rem 0;
-  color: #1a2432;
+  border-left: 4px solid var(--color-alarm); background: #fff8e6;
+  padding: 0.45rem 0.8rem; margin: 0.9rem 0; color: #1a2432;
 }
 
 @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }

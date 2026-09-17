@@ -1,8 +1,10 @@
+import Link from 'next/link';
 import { listRooms, roomStats } from '@/lib/queries.mjs';
 import { progressByRoom, lockedRoomIds } from '@/lib/scoring.mjs';
 import { get } from '@/lib/db.mjs';
 import { currentUser } from '@/lib/session';
 import { RoomFilters } from './RoomFilters';
+import { TaskPane, TaskGroup, TaskLink, DetailRow } from '@/components/xp';
 
 export const metadata = { title: 'Rooms - OTF' };
 
@@ -37,14 +39,32 @@ export default async function RoomsPage() {
 
   return (
     <div>
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold">Rooms</h1>
-        <p className="mt-1 text-sm text-[var(--color-ink-dim)]">
-          Each room is a self-contained scenario. Work the tasks, submit the flags, own the plant.
-          {!user && ' Log in to track progress and spawn labs.'}
-        </p>
+      <div className="flex flex-col gap-3 lg:flex-row lg:items-start">
+        <TaskPane>
+          <TaskGroup title="Room Tasks" icon="layers">
+            <TaskLink href="/paths" icon="path">Follow a learning path</TaskLink>
+            <TaskLink href="/leaderboard" icon="trophy">View leaderboard</TaskLink>
+            <TaskLink href="/paths/famous-incidents" icon="bolt">Famous OT incidents</TaskLink>
+          </TaskGroup>
+          <TaskGroup title="Details" icon="cpu">
+            <DetailRow label="Rooms" value={cards.length} />
+            <DetailRow label="With console" value={cards.filter((c) => c.hasLab).length} />
+            {user && <DetailRow label="Completed" value={cards.filter((c) => c.completed).length} />}
+          </TaskGroup>
+          <TaskGroup title="Legend" icon="flag">
+            <div className="text-[11px] text-[#39506f]">CONSOLE = in-browser terminal lab. FREE = no account tier required. A padlock means a prerequisite room is not finished.</div>
+          </TaskGroup>
+        </TaskPane>
+
+        <div className="min-w-0 flex-1">
+          <h1 className="mb-1 text-xl font-bold text-[#0a246a]">Rooms</h1>
+          <p className="mb-2 text-[12px] text-[#1a2432]">
+            Each room is a self-contained scenario. Work the tasks, open the console, submit the flags.
+            {!user && ' Log in to track progress and get your own flags.'}
+          </p>
+          <RoomFilters rooms={cards} allProtocols={allProtocols} />
+        </div>
       </div>
-      <RoomFilters rooms={cards} allProtocols={allProtocols} />
     </div>
   );
 }

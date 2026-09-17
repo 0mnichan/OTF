@@ -18,6 +18,9 @@ function base({ size = 18, ...props }: IconProps) {
 }
 
 export const Icon = {
+  activity: (p: IconProps) => (
+    <svg {...base(p)}><path d="M22 12h-4l-3 9L9 3l-3 9H2" /></svg>
+  ),
   gauge: (p: IconProps) => (
     <svg {...base(p)}><path d="M12 14 8 9" /><circle cx="12" cy="14" r="8" /><path d="M4 14h1M19 14h1M12 6v1" /></svg>
   ),
