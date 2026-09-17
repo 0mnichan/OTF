@@ -1,0 +1,19 @@
+slug: hall-of-infamy
+title: Hall of Infamy
+summary: >-
+  A guided tour of the OT attacks that defined the field — Stuxnet, the Ukraine
+  blackouts, TRITON, Colonial Pipeline, Oldsmar — from the household names to the
+  details only practitioners know. Research each one; the questions reward
+  understanding the mechanism, not the headline.
+difficulty: easy
+purdue_levels: [0, 1, 2, 3, 4]
+protocols: [s7comm, iec-104, modbus, dnp3]
+attack_ics: [T0843, T0831, T0880, T0806]
+tags: [research, history, incidents, theory, no-lab]
+est_minutes: 55
+author: OTF
+free: true
+published: true
+order: 25
+banner: "Know the classics. Every one of them is still a live pattern today."
+prereqs: [welcome-to-the-plant]

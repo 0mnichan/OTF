@@ -23,7 +23,7 @@ test('every dynamic-flag room ships a lab', () => {
   const { rooms } = validateContent();
   for (const room of rooms) {
     const hasDynamic = room.tasks.some((t) => t.questions.some((q) => q.kind === 'dynamic'));
-    if (hasDynamic) assert.ok(room.lab, `${room.slug} has dynamic flags but no lab`);
+    if (hasDynamic) assert.ok(room.lab || room.web_lab, `${room.slug} has dynamic flags but no lab`);
   }
 });
 

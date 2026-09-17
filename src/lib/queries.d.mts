@@ -3,6 +3,7 @@ export interface RoomRow {
   purdue_levels: number[]; protocols: string[]; attack_ics: string[]; tags: string[];
   points: number; est_minutes: number; author: string; free: boolean; published: boolean;
   order_index: number; lab_spec: any | null; banner: string; hasLab: boolean;
+  web_lab: any | null; hasWebLab: boolean;
 }
 export function listRooms(opts?: { includeUnpublished?: boolean }): RoomRow[];
 export function getRoomBySlug(slug: string, opts?: { includeUnpublished?: boolean }): RoomRow | undefined;

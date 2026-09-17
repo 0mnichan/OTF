@@ -13,9 +13,11 @@ function decodeRoom(row) {
     attack_ics: json(row.attack_ics, []),
     tags: json(row.tags, []),
     lab_spec: json(row.lab_spec, null),
+    web_lab: json(row.web_lab, null),
     free: Boolean(row.free),
     published: Boolean(row.published),
     hasLab: Boolean(row.lab_spec),
+    hasWebLab: Boolean(row.web_lab),
   };
 }
 

@@ -1,0 +1,19 @@
+slug: blackout-2015-defend
+title: "Blackout 2015: Defend"
+summary: >-
+  You have run the attack. Now stop it. Work the 2015 Ukraine intrusion backwards
+  and choose the controls that would have broken the kill chain — segmentation,
+  multi-factor remote access, command allowlisting, and the humble manual
+  fallback that actually saved the day.
+difficulty: medium
+purdue_levels: [2, 3, 4]
+protocols: [iec-104, modbus]
+attack_ics: [T0812, T0878, T0855]
+tags: [famous-incident, ukraine-2015, defense, blue-team, hardening]
+est_minutes: 45
+author: OTF
+free: true
+published: true
+order: 71
+banner: "Every control here breaks a specific link in the chain you just exploited."
+prereqs: [blackout-2015-recreate]

@@ -9,6 +9,8 @@ import { DifficultyBadge, Tag, Pill, Stat, ProgressBar } from '@/components/ui';
 import { protocolLabel, purdueLabel } from '@/lib/format';
 import { Question } from './Question';
 import { LabPanel } from './LabPanel';
+import { WebTerminal } from '@/components/WebTerminal';
+import { dynamicFlag } from '@/lib/crypto.mjs';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -49,6 +51,23 @@ export default async function RoomPage({ params }: { params: Promise<{ slug: str
   const attackLink = (t: string) =>
     `https://collaborate.mitre.org/attackics/index.php/Technique/${t}`;
 
+  // For a web lab, compute THIS player's per-user flags server-side and hand
+  // them to the terminal, which reveals them only once the objective is met.
+  // The signing secret never leaves the server; the flag is the player's own.
+  const webFlags: Record<string, string> = {};
+  if (room.hasWebLab && user) {
+    for (const t of tasks) {
+      for (const q of t.questions) {
+        if (q.kind === 'dynamic') {
+          const flag = dynamicFlag(user.id, `${room.slug}.${q.ref}`);
+          // Scenarios key on the bare ref; keep the qualified key too.
+          webFlags[q.ref] = flag;
+          webFlags[`${room.slug}.${q.ref}`] = flag;
+        }
+      }
+    }
+  }
+
   let questionIndex = 0;
 
   return (
@@ -63,6 +82,7 @@ export default async function RoomPage({ params }: { params: Promise<{ slug: str
           <div className="flex flex-wrap items-center gap-2">
             <DifficultyBadge difficulty={room.difficulty} />
             {room.hasLab && <Pill tone="lab">LIVE LAB</Pill>}
+            {room.hasWebLab && <Pill tone="lab">WEB CONSOLE</Pill>}
             {room.free && <Pill tone="free">FREE</Pill>}
           </div>
           <h1 className="mt-3 text-3xl font-bold">{room.title}</h1>
@@ -104,6 +124,20 @@ export default async function RoomPage({ params }: { params: Promise<{ slug: str
             </div>
           ) : (
             <div className="flex flex-col gap-8">
+              {room.hasWebLab && (
+                user ? (
+                  <WebTerminal
+                    scenario={room.web_lab.scenario}
+                    flags={webFlags}
+                    briefing={room.web_lab.briefing}
+                  />
+                ) : (
+                  <div className="card p-4 text-sm">
+                    <Link href={`/login?next=/rooms/${room.slug}`} className="text-[var(--color-info)] hover:underline">Log in</Link>{' '}
+                    to open the console and get your own flags for this room.
+                  </div>
+                )
+              )}
               {tasks.map((task: any) => (
                 <section key={task.id}>
                   <h2 className="mb-3 flex items-center gap-2 text-xl font-semibold">
@@ -160,7 +194,10 @@ export default async function RoomPage({ params }: { params: Promise<{ slug: str
             </div>
           )}
 
-          {room.hasLab && user && lockedBy.length === 0 && (
+          {/* Docker lab panel only when there is no web console and an
+              orchestrator is actually configured — otherwise the web console
+              above is the way to play. */}
+          {room.hasLab && !room.hasWebLab && orchestratorConfigured && user && lockedBy.length === 0 && (
             <LabPanel roomSlug={room.slug} briefing={room.lab_spec?.briefing ?? ''} available={orchestratorConfigured} />
           )}
 

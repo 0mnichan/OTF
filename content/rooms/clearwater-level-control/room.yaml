@@ -48,3 +48,9 @@ lab:
       label: Operator HMI
       cpus: 0.5
       memory_mb: 256
+web_lab:
+  scenario: clearwater
+  briefing: >-
+    Clarifier T-101 PLC at 10.13.37.20 (plc.lab). Raise the setpoint to
+    commandeer the pump and overflow the tank; the flag is released once it
+    physically overflows. 'status' shows the live level. Type 'help'.

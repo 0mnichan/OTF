@@ -40,3 +40,8 @@ lab:
         OTF_FLAG_REF: "modbus-101.reg-flag"
       cpus: 0.25
       memory_mb: 128
+web_lab:
+  scenario: modbus-101
+  briefing: >-
+    A Modbus/TCP device is on the segment at 10.13.37.10 (plc.lab). Fingerprint
+    it, map the register space, and read past where the HMI polls. Type 'help'.

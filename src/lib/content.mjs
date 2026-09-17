@@ -13,6 +13,7 @@ import { parse as parseYaml } from 'yaml';
 import { z } from 'zod';
 import { PROJECT_ROOT, all, get, run, transaction } from './db.mjs';
 import { normalizeAnswer, hashAnswer } from './crypto.mjs';
+import { scenarioExists } from './webterm/engine.mjs';
 
 export const CONTENT_DIR = join(PROJECT_ROOT, 'content');
 const ROOMS_DIR = join(CONTENT_DIR, 'rooms');
@@ -108,6 +109,12 @@ const labSchema = z.object({
   services: z.array(labServiceSchema).min(1),
 });
 
+// A web lab: a scenario the in-browser terminal simulates. No Docker needed.
+const webLabSchema = z.object({
+  scenario: z.string().min(1),
+  briefing: z.string().default(''),
+});
+
 const roomSchema = z.object({
   slug,
   title: z.string().min(1),
@@ -128,6 +135,7 @@ const roomSchema = z.object({
   banner: z.string().default(''),
   prereqs: z.array(slug).default([]),
   lab: labSchema.optional(),
+  web_lab: webLabSchema.optional(),
   tasks: z.array(z.string()).optional(),
 });
 
@@ -311,10 +319,14 @@ export function validateContent() {
         errors.push(`${room.slug}: room lists itself as a prerequisite`);
       }
     }
-    // A room promising a lab-derived flag but shipping no lab is a dead end.
+    // A room promising a lab-derived flag but shipping no lab (Docker or web)
+    // is a dead end.
     const needsLab = room.tasks.some((t) => t.questions.some((q) => q.kind === 'dynamic'));
-    if (needsLab && !room.lab) {
-      errors.push(`${room.slug}: has dynamic flags but no lab definition`);
+    if (needsLab && !room.lab && !room.web_lab) {
+      errors.push(`${room.slug}: has dynamic flags but no lab (add a lab: or web_lab: block)`);
+    }
+    if (room.web_lab && !scenarioExists(room.web_lab.scenario)) {
+      errors.push(`${room.slug}: web_lab scenario "${room.web_lab.scenario}" is not implemented in the terminal engine`);
     }
   }
 
@@ -409,6 +421,7 @@ export function syncContent({ quiet = false } = {}) {
         room.lab ? JSON.stringify(room.lab) : null,
         room.banner,
         room.content_hash,
+        room.web_lab ? JSON.stringify(room.web_lab) : null,
       ];
 
       let roomId;
@@ -417,7 +430,7 @@ export function syncContent({ quiet = false } = {}) {
         run(
           `UPDATE rooms SET title=?, summary=?, difficulty=?, purdue_levels=?, protocols=?,
                   attack_ics=?, tags=?, points=?, est_minutes=?, author=?, free=?, published=?,
-                  order_index=?, lab_spec=?, banner=?, content_hash=?, updated_at=datetime('now')
+                  order_index=?, lab_spec=?, banner=?, content_hash=?, web_lab=?, updated_at=datetime('now')
              WHERE id=?`,
           ...fields,
           roomId,
@@ -426,8 +439,8 @@ export function syncContent({ quiet = false } = {}) {
         const res = run(
           `INSERT INTO rooms (title, summary, difficulty, purdue_levels, protocols, attack_ics,
                               tags, points, est_minutes, author, free, published, order_index,
-                              lab_spec, banner, content_hash, slug)
-           VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+                              lab_spec, banner, content_hash, web_lab, slug)
+           VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
           ...fields,
           room.slug,
         );
