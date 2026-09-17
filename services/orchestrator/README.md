@@ -15,13 +15,13 @@ has no path to the container runtime.
 | POST | `/labs/status` | `{id}` | `{state, endpoints}` |
 | POST | `/labs/stop` | `{id}` | `{state}` |
 | POST | `/labs/extend` | `{id, minutes}` | `{state, expiresAt}` |
-| GET  | `/health` | — | `{ok, running}` |
+| GET  | `/health` | - | `{ok, running}` |
 
 ## What a spawn creates
 
 For a lab `id` and a room spec, the orchestrator:
 
-1. Creates a dedicated bridge network `otf_<id>` with **`internal: true`** — the
+1. Creates a dedicated bridge network `otf_<id>` with **`internal: true`** - the
    containers can talk to each other but have **no route to the internet**. A
    training range must never be usable as a launch pad.
 2. Starts each service container on that network with the room's resource caps

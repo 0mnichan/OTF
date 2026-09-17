@@ -3,8 +3,8 @@ Bridgehead reactor PLC (Meridian Chemical, Level 1).
 
 Map (wire addresses):
   Input register  4  : true reactor temperature (deg C)   [PV]
-  Holding reg     30 : temperature setpoint                [writable — attack]
-  Holding reg     34 : reported temperature (to historian) [writable — view manip]
+  Holding reg     30 : temperature setpoint                [writable - attack]
+  Holding reg     34 : reported temperature (to historian) [writable - view manip]
   Holding reg  60-75 : PLC identity flag (device-ident session)  [emitted at boot]
   Holding reg  80-95 : process-trip flag (true temp tripped while reported normal)
   Discrete input  1  : trip active

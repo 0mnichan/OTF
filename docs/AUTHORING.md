@@ -1,7 +1,7 @@
 # Authoring rooms
 
 A room is a directory under `content/rooms/<slug>/`. Nothing about a room lives
-in the database by hand — you write files, run `npm run content:validate`, and
+in the database by hand - you write files, run `npm run content:validate`, and
 `npm run content:sync` loads them into SQLite. Rooms are reviewed and versioned
 in pull requests like any other code.
 
@@ -75,7 +75,7 @@ Markdown body. Code blocks, tables and images all render.
 | `numeric` | `value`, `tolerance`, `unit` | Strips non-numeric characters before comparing. |
 | `choice` | `options`, `correct` | `correct` is an index or list of indices. |
 | `dynamic` | `flag_prefix` | Per-user flag: `HMAC(userId, room.ref)`. Requires a lab that emits it. |
-| `ack` | — | "Mark as read"; always correct, worth its points. |
+| `ack` | - | "Mark as read"; always correct, worth its points. |
 
 ### The `ref` is sacred
 
@@ -87,7 +87,7 @@ points and hints freely; keep the ref.
 
 A `dynamic` question's flag is derived per user and injected into the lab at
 spawn as `OTF_FLAG_<REF>` (and `OTF_FLAG` for a single-flag service). The lab
-image must emit that exact value only when the objective is genuinely reached —
+image must emit that exact value only when the objective is genuinely reached -
 see `labs/base/sim-core/` for the pattern. `content:validate` fails a room that
 has dynamic flags but no lab.
 

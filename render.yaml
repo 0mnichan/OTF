@@ -1,4 +1,4 @@
-# Render Blueprint — deploys the OTF platform in content-only mode.
+# Render Blueprint - deploys the OTF platform in content-only mode.
 #
 # Labs are intentionally OFF here: without OTF_ORCHESTRATOR_URL the app runs
 # fine and the lab panel shows "orchestrator not configured". Live labs need a
@@ -37,7 +37,7 @@ services:
     # --- Persistence (optional) ---------------------------------------------
     # Free instances have an ephemeral filesystem, so users/progress reset on
     # every deploy or cold start (content + badges re-seed automatically on
-    # boot, so the site is never broken — just forgetful). To keep data:
+    # boot, so the site is never broken - just forgetful). To keep data:
     #   1. set plan: starter  (above)
     #   2. uncomment the disk block below
     #   3. change OTF_DB_PATH to /var/data/otf.db
@@ -45,3 +45,13 @@ services:
     #   name: otf-data
     #   mountPath: /var/data
     #   sizeGB: 1
+
+      # Google sign-in (optional). Set these in the Render dashboard (secret),
+      # and set OTF_BASE_URL to your service URL, then add the redirect URI
+      # <OTF_BASE_URL>/api/auth/google/callback in Google Cloud Console.
+      - key: OTF_BASE_URL
+        sync: false
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false

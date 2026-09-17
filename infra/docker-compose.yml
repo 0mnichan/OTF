@@ -1,4 +1,4 @@
-# OTF — single-VM deployment.
+# OTF - single-VM deployment.
 #
 #   cp .env.example .env      # set OTF_SECRET (openssl rand -hex 32)
 #   ./infra/build-labs.sh     # build the lab images (once)

@@ -17,7 +17,7 @@ if (command === 'validate') {
   );
   const withLabs = rooms.filter((r) => r.lab).length;
   console.log(
-    `✓ ${rooms.length} rooms, ${paths.length} paths, ${questions} questions, ${withLabs} labs — all valid.`,
+    `✓ ${rooms.length} rooms, ${paths.length} paths, ${questions} questions, ${withLabs} labs - all valid.`,
   );
 } else if (command === 'sync') {
   console.log('Syncing content into the database...');

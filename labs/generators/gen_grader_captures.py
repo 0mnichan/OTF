@@ -20,7 +20,7 @@ def benign(path, cmds=True):
     for i in range(30):
         s+=1; w.write(legit, rtu, apci_i(s, r, asdu(100, 6, 1, 0, b"\x14")), dt=1.0)
         r+=1; w.write(rtu, legit, apci_i(r, s, asdu(13, 20, 1, 4000+i%8, struct.pack("<f",33.0)+b"\x00")), dt=0.05)
-    if cmds:  # the legit master DOES issue commands too — this is the FP trap
+    if cmds:  # the legit master DOES issue commands too - this is the FP trap
         s+=1; w.write(legit, rtu, apci_i(s, r, asdu(45, 6, 1, 2001, b"\x00")), dt=0.5)  # legit close
     w.close()
 

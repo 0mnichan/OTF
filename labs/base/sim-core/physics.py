@@ -13,7 +13,7 @@ from dataclasses import dataclass, field
 @dataclass
 class TankModel:
     """
-    A single gravity-drained tank with a pumped inlet — the Clearwater clarifier.
+    A single gravity-drained tank with a pumped inlet - the Clearwater clarifier.
 
     Level is a percentage of tank height. Inflow happens only while the pump is
     commanded on; outflow is roughly constant (gravity feed) whenever there is
@@ -82,7 +82,7 @@ class HighHighAlarm:
 @dataclass
 class ConveyorInterlock:
     """
-    The Ladder Logic Autopsy model: a conveyor that must stop on a jam — unless
+    The Ladder Logic Autopsy model: a conveyor that must stop on a jam - unless
     the maintenance bypass defeats the interlock.
     """
     running: bool = True

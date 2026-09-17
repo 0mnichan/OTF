@@ -72,5 +72,5 @@ if (process.env.NODE_ENV !== 'production') {
     createUser(demo);
     console.log(`  created ${demo.role.padEnd(6)} ${demo.email}  (password: ${demo.password})`);
   }
-  console.log('\nDevelopment accounts only — change these before exposing the instance.');
+  console.log('\nDevelopment accounts only - change these before exposing the instance.');
 }

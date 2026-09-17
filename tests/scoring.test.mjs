@@ -1,5 +1,5 @@
 /**
- * Scoring engine tests — answer checking, points, first blood, hints, badges,
+ * Scoring engine tests - answer checking, points, first blood, hints, badges,
  * dynamic flags and anti-cheat. Runs against a real (in-file) SQLite database,
  * so there is no mock: the same code path the app uses is exercised here.
  */

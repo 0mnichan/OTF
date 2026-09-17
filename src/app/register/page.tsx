@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { GoogleButton } from '@/components/GoogleButton';
 import { redirect } from 'next/navigation';
 import { currentUser } from '@/lib/session';
 import { Icon } from '@/components/icons';
@@ -36,6 +37,7 @@ export default async function RegisterPage({
       )}
 
       <form action="/api/auth/register" method="post" className="card flex flex-col gap-4 p-6">
+        <GoogleButton />
         <label className="flex flex-col gap-1.5 text-sm">
           <span className="text-[var(--color-ink-dim)]">Callsign (username)</span>
           <input name="username" required autoFocus minLength={3} maxLength={24} pattern="[a-zA-Z0-9_\-]+"

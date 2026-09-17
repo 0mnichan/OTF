@@ -3,7 +3,7 @@ Generate substation-incident.pcap for Silent Substation.
 
 A long baseline of legitimate IEC-104 polling from the real control centre,
 then a rogue master that connects late, skips all monitoring, and issues a
-single command (C_SC_NA_1, TypeID 45) to the breaker's IOA — opening it.
+single command (C_SC_NA_1, TypeID 45) to the breaker's IOA - opening it.
 """
 import sys, os, struct
 sys.path.insert(0, os.path.dirname(__file__))

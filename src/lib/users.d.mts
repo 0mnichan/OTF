@@ -38,3 +38,5 @@ export function pruneSessions(): number;
 export function listUsers(opts?: { limit?: number; offset?: number }): UserRow[];
 export function setUserRole(userId: number, role: string): UserRow | undefined;
 export function updateProfile(userId: number, input: { bio?: string }): UserRow | undefined;
+export function findUserByGoogleId(googleId: string): UserRow | undefined;
+export function upsertGoogleUser(input: { googleId: string; email: string; name?: string }): UserRow;

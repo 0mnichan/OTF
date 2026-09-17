@@ -159,3 +159,63 @@ export function updateProfile(userId, { bio }) {
     return findUserById(userId);
   });
 }
+
+/* -------------------------------------------------------------------------- */
+/* Google sign-in                                                             */
+/* -------------------------------------------------------------------------- */
+
+/** Turn an email/display name into a valid, unique username. */
+function deriveUsername(email, name) {
+  let base = String(name || email.split('@')[0] || 'operator')
+    .toLowerCase()
+    .replace(/[^a-z0-9_-]/g, '')
+    .slice(0, 20);
+  if (base.length < 3) base = `op${base}`;
+  let candidate = base;
+  let n = 1;
+  while (get('SELECT 1 FROM users WHERE lower(username) = ?', candidate.toLowerCase())) {
+    const suffix = String(n++);
+    candidate = base.slice(0, 24 - suffix.length) + suffix;
+  }
+  return candidate;
+}
+
+export function findUserByGoogleId(googleId) {
+  return get(
+    `SELECT id, username, email, role, points, bio, created_at FROM users WHERE google_id = ?`,
+    googleId,
+  );
+}
+
+/**
+ * Find or create the user behind a verified Google identity.
+ *  - existing google_id      -> that user
+ *  - existing email          -> link the google_id to it
+ *  - otherwise               -> create a new account (first-ever user is admin)
+ * OAuth users get an unusable random password so password login cannot work.
+ */
+export function upsertGoogleUser({ googleId, email, name }) {
+  if (!googleId || !email) throw new ValidationError('google', 'Missing Google identity.');
+  const normalizedEmail = String(email).trim().toLowerCase();
+
+  const byGoogle = findUserByGoogleId(googleId);
+  if (byGoogle) return byGoogle;
+
+  const byEmail = get('SELECT id FROM users WHERE email = ?', normalizedEmail);
+  if (byEmail) {
+    run('UPDATE users SET google_id = ? WHERE id = ?', googleId, byEmail.id);
+    return findUserById(byEmail.id);
+  }
+
+  const isFirst = get('SELECT COUNT(*) AS n FROM users').n === 0;
+  const username = deriveUsername(normalizedEmail, name);
+  const result = run(
+    `INSERT INTO users (username, email, password_hash, role, google_id) VALUES (?, ?, ?, ?, ?)`,
+    username,
+    normalizedEmail,
+    hashPassword(randomToken(24)),
+    isFirst ? 'admin' : 'player',
+    googleId,
+  );
+  return findUserById(Number(result.lastInsertRowid));
+}

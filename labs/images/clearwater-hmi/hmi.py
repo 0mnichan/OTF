@@ -3,7 +3,7 @@ Clearwater operator HMI.
 
 A minimal, dependency-light web view of the clarifier: it polls the PLC over
 Modbus and renders a live tank with level, setpoint, pump state and alarm. It
-deliberately displays whatever the PLC reports — so if an attacker manipulates
+deliberately displays whatever the PLC reports - so if an attacker manipulates
 the reported values, the operator's screen is fooled exactly as it would be on a
 real plant. This is the concrete demonstration of Manipulation of View.
 """
@@ -19,7 +19,7 @@ PLC_PORT = int(os.environ.get("OTF_PLC_PORT", "502"))
 PORT = int(os.environ.get("PORT", "8080"))
 
 PAGE = """<!doctype html><html><head><meta charset=utf-8>
-<title>Clearwater WTP — T-101</title>
+<title>Clearwater WTP - T-101</title>
 <style>
  body{background:#0d1117;color:#e6edf3;font-family:ui-monospace,monospace;margin:0;padding:24px}
  .wrap{max-width:640px;margin:0 auto}

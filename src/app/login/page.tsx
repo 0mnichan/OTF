@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { GoogleButton } from '@/components/GoogleButton';
 import { redirect } from 'next/navigation';
 import { currentUser } from '@/lib/session';
 import { Icon } from '@/components/icons';
@@ -28,6 +29,7 @@ export default async function LoginPage({
       )}
 
       <form action="/api/auth/login" method="post" className="card flex flex-col gap-4 p-6">
+        <GoogleButton />
         {next && <input type="hidden" name="next" value={next} />}
         <label className="flex flex-col gap-1.5 text-sm">
           <span className="text-[var(--color-ink-dim)]">Email</span>

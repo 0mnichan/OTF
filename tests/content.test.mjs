@@ -44,7 +44,7 @@ test('sync populates rooms, tasks, questions and never stores a plaintext flag',
   }
 });
 
-test('sync is idempotent — re-running does not duplicate rooms', () => {
+test('sync is idempotent - re-running does not duplicate rooms', () => {
   syncContent({ quiet: true });
   const first = get('SELECT COUNT(*) AS n FROM rooms').n;
   syncContent({ quiet: true });

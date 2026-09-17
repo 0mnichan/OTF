@@ -9,13 +9,13 @@ proprietary software, no real project files. Build them all with
 `labs/base/sim-core/` is the reusable engine every process-simulation room
 shares:
 
-- **`physics.py`** — pure, dependency-free process models (tank, level control,
+- **`physics.py`** - pure, dependency-free process models (tank, level control,
   alarm, conveyor interlock, reactor). Unit-tested directly in `tests/`.
-- **`modbus_runtime.py`** — a pymodbus TCP server that exposes a physics model
+- **`modbus_runtime.py`** - a pymodbus TCP server that exposes a physics model
   through registers/coils and emits a flag into a register block **only when the
   simulation genuinely reaches the objective state**. This is what makes flags
   physical-consequence flags rather than strings.
-- **`flags.py`** — per-user flag resolution and ASCII↔register packing.
+- **`flags.py`** - per-user flag resolution and ASCII↔register packing.
 
 ## Image catalogue
 
@@ -49,7 +49,7 @@ shares:
 
 ## Safety
 
-- Every lab network is created with `internal: true` — **no internet egress**.
+- Every lab network is created with `internal: true` - **no internet egress**.
 - Containers run with `cap_drop: ALL`, `no-new-privileges`, CPU/memory/PID caps.
 - Flags are per-user (HMAC-derived) and injected at spawn, so a leaked flag is
   useless to anyone else and traceable to whoever it was issued to.

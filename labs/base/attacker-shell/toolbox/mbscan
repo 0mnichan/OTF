@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# mbscan <cidr> — find Modbus/TCP hosts and fingerprint them.
+# mbscan <cidr> - find Modbus/TCP hosts and fingerprint them.
 CIDR="${1:-10.13.37.0/24}"
 echo "[*] scanning $CIDR for Modbus/TCP (502)..."
 nmap -p502 --open -oG - "$CIDR" | awk '/502\/open/{print $2}' | while read -r ip; do

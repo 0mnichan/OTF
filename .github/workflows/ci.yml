@@ -7,7 +7,7 @@ on:
 
 jobs:
   web:
-    name: Web app — typecheck, content, tests, build
+    name: Web app - typecheck, content, tests, build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -32,7 +32,7 @@ jobs:
           OTF_SECRET: ci-secret-not-used-in-prod
 
   orchestrator:
-    name: Orchestrator — tests
+    name: Orchestrator - tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -45,7 +45,7 @@ jobs:
         run: node --test
 
   labs:
-    name: Labs — physics tests, artifact generation, Dockerfile lint
+    name: Labs - physics tests, artifact generation, Dockerfile lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

@@ -3,9 +3,9 @@ set -e
 useradd -m -s /bin/bash support 2>/dev/null || true
 echo "support:support" | chpasswd
 echo "${OTF_FLAG:-OTF{ews-default}}" > /home/support/flag.txt
-# The reactor project's tag table — the authoritative register map.
+# The reactor project's tag table - the authoritative register map.
 cat > /home/support/reactor_project.tags <<TAGS
-# Meridian Reactor R-1 — controller tag map (exported from project)
+# Meridian Reactor R-1 - controller tag map (exported from project)
 # tag                 modbus                comment
 REACTOR_TEMP_PV       IR:4                  measured temperature (deg C)
 REACTOR_TEMP_SP       HR:30                 temperature setpoint  [operators set this]

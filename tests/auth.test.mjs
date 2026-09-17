@@ -63,3 +63,27 @@ test('roles can be changed and are validated', () => {
   assert.equal(setUserRole(u.id, 'admin').role, 'admin');
   assert.throws(() => setUserRole(u.id, 'wizard'));
 });
+
+test('upsertGoogleUser: creates, then links by google_id and by email', async () => {
+  const { upsertGoogleUser, findUserByGoogleId, createUser } = await import('../src/lib/users.mjs');
+  // New Google user.
+  const u1 = upsertGoogleUser({ googleId: 'g-100', email: 'gmailer@example.com', name: 'Gmail Person' });
+  assert.ok(u1.id);
+  assert.equal(u1.email, 'gmailer@example.com');
+  // Same google_id returns the same user (no duplicate).
+  const u1b = upsertGoogleUser({ googleId: 'g-100', email: 'gmailer@example.com', name: 'x' });
+  assert.equal(u1b.id, u1.id);
+  assert.ok(findUserByGoogleId('g-100'));
+  // A pre-existing email account gets linked, not duplicated.
+  const existing = createUser({ username: 'linkme', email: 'linkme@example.com', password: 'longenough1' });
+  const linked = upsertGoogleUser({ googleId: 'g-200', email: 'linkme@example.com', name: 'Link Me' });
+  assert.equal(linked.id, existing.id);
+  assert.ok(findUserByGoogleId('g-200'));
+});
+
+test('upsertGoogleUser derives a unique username from the email', async () => {
+  const { upsertGoogleUser } = await import('../src/lib/users.mjs');
+  const a = upsertGoogleUser({ googleId: 'g-301', email: 'dup.name@example.com', name: 'dupname' });
+  const b = upsertGoogleUser({ googleId: 'g-302', email: 'dupname@other.com', name: 'dupname' });
+  assert.notEqual(a.username, b.username);
+});

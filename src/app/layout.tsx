@@ -3,6 +3,8 @@ import { Suspense } from 'react';
 import { Nav } from '@/components/nav';
 import './globals.css';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'OTF - the OT/ICS Cyber Range',
   description:

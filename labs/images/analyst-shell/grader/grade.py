@@ -2,8 +2,8 @@
 """
 Silent Substation detection grader.
 
-Replays a set of held-out captures — benign polling sessions and attack variants
-— against the player's detection logic and scores it the way a SOC would: full
+Replays a set of held-out captures - benign polling sessions and attack variants
+- against the player's detection logic and scores it the way a SOC would: full
 detection with zero false positives, or it does not ship.
 
 To keep the grader self-contained and deterministic, "the player's rule" is

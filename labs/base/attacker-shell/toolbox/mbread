@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""mbread <host> <start> <count> — read holding registers, print raw + ASCII."""
+"""mbread <host> <start> <count> - read holding registers, print raw + ASCII."""
 import sys, struct
 from pymodbus.client import ModbusTcpClient
 host, start, count = sys.argv[1], int(sys.argv[2]), int(sys.argv[3])

@@ -11,7 +11,7 @@ lab:
   enabled: true             # default true
   ttl_minutes: 60           # 5–240; the reaper tears the lab down at expiry
   network: otf-lab          # informational; the real network is per-instance
-  egress: false             # LOCKED to false — labs never reach the internet
+  egress: false             # LOCKED to false - labs never reach the internet
   briefing: >-              # shown in the lab panel before spawn
     Free text describing the segment, hostnames and objective.
   services:
@@ -29,7 +29,7 @@ lab:
 
 ## How the orchestrator realises it
 
-1. Creates an **internal** bridge network `otf_<labId>` — no gateway, no egress.
+1. Creates an **internal** bridge network `otf_<labId>` - no gateway, no egress.
 2. Starts each service on that network with DNS aliases matching `hostname`, so
    `plc.lab` resolves between containers.
 3. Applies caps: `Memory`, `NanoCpus`, `PidsLimit: 256`, `CapDrop: [ALL]`,
@@ -41,9 +41,9 @@ lab:
 
 ## `expose` values
 
-- **`terminal`** — a ttyd container; the player gets an in-browser shell.
-- **`http`** — a web service (e.g. an HMI); the player gets a link.
-- **`none`** — reachable only from inside the lab network (the actual targets).
+- **`terminal`** - a ttyd container; the player gets an in-browser shell.
+- **`http`** - a web service (e.g. an HMI); the player gets a link.
+- **`none`** - reachable only from inside the lab network (the actual targets).
 
 ## Emitting flags from a lab
 
@@ -59,5 +59,5 @@ Today all services in a lab share one isolated network, with hostnames matching
 the briefing. The Bridgehead room narrates distinct Purdue segments (corporate,
 DMZ, plant) as separate IP ranges; realising those as separate networks with a
 routing/firewall container between them is a planned extension. The spec already
-carries `hostname` per service so room content need not change when it lands —
+carries `hostname` per service so room content need not change when it lands -
 only the orchestrator's network construction.

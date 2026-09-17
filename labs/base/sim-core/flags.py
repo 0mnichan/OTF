@@ -24,7 +24,7 @@ def flag_for(ref: str | None = None, default: str = "OTF{simulation-default-flag
 def ascii_to_registers(text: str, count: int) -> list[int]:
     """
     Pack an ASCII string into `count` 16-bit big-endian registers, space-padded.
-    Two characters per register — the standard way strings live in Modbus.
+    Two characters per register - the standard way strings live in Modbus.
     """
     data = text.encode("ascii", errors="replace")
     data = data[: count * 2].ljust(count * 2, b"\x00")

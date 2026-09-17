@@ -1,5 +1,5 @@
 """
-Ladder Logic Autopsy — bottling line B3 controller.
+Ladder Logic Autopsy - bottling line B3 controller.
 
 Map (wire addresses):
   Coil            8  : jam sensor input (settable for maintenance testing)

@@ -1,10 +1,10 @@
 """
 Clearwater clarifier level-control PLC.
 
-Register / coil map (wire addresses, 0-based) — mirrors content/rooms/clearwater:
+Register / coil map (wire addresses, 0-based) - mirrors content/rooms/clearwater:
   Input register  2  : measured tank level (%)          [read-only PV]
-  Holding reg     10 : level setpoint (%)                [writable — the attack]
-  Holding reg     12 : high-high alarm threshold (%)     [writable — safety defeat]
+  Holding reg     10 : level setpoint (%)                [writable - the attack]
+  Holding reg     12 : high-high alarm threshold (%)     [writable - safety defeat]
   Holding reg     20 : witness flag (level crossed 80%)  [emitted]
   Holding reg  40-55 : overflow objective flag           [emitted on overflow]
   Coil            1  : pump run command                  [PLC-driven]

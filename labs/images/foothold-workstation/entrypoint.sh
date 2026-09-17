@@ -4,7 +4,7 @@ set -e
 # password here is what lets the player pivot to the historian.
 mkdir -p /home/operator/.config/histclient
 cat > /home/operator/.config/histclient/connection.ini <<PROFILE
-; PI/historian client — saved connection (do not commit real creds like this!)
+; PI/historian client - saved connection (do not commit real creds like this!)
 [historian.dmz]
 host = 172.16.8.20
 user = svc_hist

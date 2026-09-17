@@ -11,7 +11,7 @@ must not itself become a weapon or a liability.
    incidents are labelled as fictional recreations, and their captures and
    addresses are synthesised by us (`labs/generators/`).
 2. **No zero-days.** Vulnerabilities are either inherent protocol weaknesses
-   (Modbus has no authentication — that *is* the lesson) or well-documented
+   (Modbus has no authentication - that *is* the lesson) or well-documented
    weakness classes reimplemented in our own code. We ship nothing that is novel
    and weaponisable.
 3. **Labs cannot reach the internet.** Every lab network is created with
@@ -32,7 +32,7 @@ component.
   with [`docker-socket-proxy`](https://github.com/Tecnativa/docker-socket-proxy)
   configured to allow only the endpoints the orchestrator actually calls
   (containers create/start/remove, networks create/connect/remove, images
-  inspect, and list/inspect). Everything else — exec, volumes, swarm, build —
+  inspect, and list/inspect). Everything else - exec, volumes, swarm, build -
   stays denied. A compromise of the orchestrator is then bounded to lab
   lifecycle operations rather than arbitrary host control.
 - The orchestrator enforces one running lab per user, a global concurrency
